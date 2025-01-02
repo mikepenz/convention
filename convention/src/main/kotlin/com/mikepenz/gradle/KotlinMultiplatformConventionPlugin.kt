@@ -7,10 +7,7 @@ import org.gradle.jvm.toolchain.JavaLanguageVersion
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.withType
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import org.jetbrains.kotlin.gradle.dsl.KotlinJvmCompilerOptions
-import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
-import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
+import org.jetbrains.kotlin.gradle.dsl.*
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask
 
 class KotlinMultiplatformConventionPlugin : Plugin<Project> {
@@ -35,30 +32,76 @@ class KotlinMultiplatformConventionPlugin : Plugin<Project> {
 }
 
 fun KotlinMultiplatformExtension.configureMultiplatformTargets(project: Project) {
-    val jvmOnly = project.properties.getOrDefault("org.mikepenz.jvm.only", "false").toString().toBoolean()
+    // COMPOSE COMPATIBLE TARGETS START
+    val androidEnabled = project.properties.getOrDefault("org.mikepenz.android.enabled", "true").toString().toBoolean()
+    val jvmEnabled = project.properties.getOrDefault("org.mikepenz.jvm.enabled", "true").toString().toBoolean()
+    val wasmEnabled = project.properties.getOrDefault("org.mikepenz.wasm.enabled", "true").toString().toBoolean()
+    val jsEnabled = project.properties.getOrDefault("org.mikepenz.js.enabled", "true").toString().toBoolean()
+    val composeNativeEnabled = project.properties.getOrDefault("org.mikepenz.composeNative.enabled", "true").toString().toBoolean()
+    val nativeEnabled = project.properties.getOrDefault("org.mikepenz.native.enabled", "false").toString().toBoolean()
+    // COMPOSE COMPATIBLE TARGETS FALSE
 
     applyDefaultHierarchyTemplate()
 
-    if (project.pluginManager.hasPlugin("com.android.library")) {
+    // COMPOSE COMPATIBLE TARGETS START
+    if (androidEnabled && project.pluginManager.hasPlugin("com.android.library")) {
         androidTarget {
             publishLibraryVariants("release")
         }
     }
-    jvm()
 
-    if (!jvmOnly) {
+    if (jvmEnabled) {
+        jvm()
+    }
+
+    if (wasmEnabled) {
         @OptIn(ExperimentalWasmDsl::class)
         wasmJs {
+            nodejs()
             browser()
         }
+    }
+
+    if (jsEnabled) {
         js(IR) {
-            nodejs()
+            nodejs {}
+            browser {}
+            compilerOptions {
+                moduleKind.set(JsModuleKind.MODULE_UMD)
+                sourceMap.set(true)
+                sourceMapEmbedSources.set(null)
+            }
         }
+    }
+
+    if (composeNativeEnabled) {
         macosX64()
         macosArm64()
+
         iosX64()
         iosArm64()
         iosSimulatorArm64()
+    }
+    // COMPOSE COMPATIBLE TARGETS END
+
+    if (nativeEnabled) {
+        // tier 2
+        linuxArm64()
+        watchosSimulatorArm64()
+        watchosX64()
+        watchosArm32()
+        watchosArm64()
+        tvosSimulatorArm64()
+        tvosX64()
+        tvosArm64()
+
+        // tier 3
+        // androidNativeArm32()
+        // androidNativeArm64()
+        // androidNativeX86()
+        // androidNativeX64()
+        mingwX64()
+        watchosDeviceArm64()
     }
 }
 
