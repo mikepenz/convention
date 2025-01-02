@@ -1,2 +1,3 @@
-# convention
-Re-useable convention plugin
+# version-catalog
+
+Common Version-Catalog for all the projects
