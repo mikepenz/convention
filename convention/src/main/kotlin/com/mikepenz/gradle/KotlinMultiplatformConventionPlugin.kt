@@ -12,13 +12,13 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask
 
 class KotlinMultiplatformConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) = with(target) {
-        val multiplatformEnabled = project.properties.getOrDefault("org.mikepenz.multiplatform.enabled", "true").toString().toBoolean()
+        val multiplatformEnabled = project.properties.getOrDefault("com.mikepenz.multiplatform.enabled", "true").toString().toBoolean()
         if (multiplatformEnabled) {
             with(pluginManager) {
                 apply("org.jetbrains.kotlin.multiplatform")
             }
 
-            val targetsEnabled = project.properties.getOrDefault("org.mikepenz.targets.enabled", "true").toString().toBoolean()
+            val targetsEnabled = project.properties.getOrDefault("com.mikepenz.targets.enabled", "true").toString().toBoolean()
             if (targetsEnabled) {
                 extensions.configure<KotlinMultiplatformExtension> {
                     configureMultiplatformTargets(target)
@@ -33,12 +33,12 @@ class KotlinMultiplatformConventionPlugin : Plugin<Project> {
 
 fun KotlinMultiplatformExtension.configureMultiplatformTargets(project: Project) {
     // COMPOSE COMPATIBLE TARGETS START
-    val androidEnabled = project.properties.getOrDefault("org.mikepenz.android.enabled", "true").toString().toBoolean()
-    val jvmEnabled = project.properties.getOrDefault("org.mikepenz.jvm.enabled", "true").toString().toBoolean()
-    val wasmEnabled = project.properties.getOrDefault("org.mikepenz.wasm.enabled", "true").toString().toBoolean()
-    val jsEnabled = project.properties.getOrDefault("org.mikepenz.js.enabled", "true").toString().toBoolean()
-    val composeNativeEnabled = project.properties.getOrDefault("org.mikepenz.composeNative.enabled", "true").toString().toBoolean()
-    val nativeEnabled = project.properties.getOrDefault("org.mikepenz.native.enabled", "false").toString().toBoolean()
+    val androidEnabled = project.properties.getOrDefault("com.mikepenz.android.enabled", "true").toString().toBoolean()
+    val jvmEnabled = project.properties.getOrDefault("com.mikepenz.jvm.enabled", "true").toString().toBoolean()
+    val wasmEnabled = project.properties.getOrDefault("com.mikepenz.wasm.enabled", "true").toString().toBoolean()
+    val jsEnabled = project.properties.getOrDefault("com.mikepenz.js.enabled", "true").toString().toBoolean()
+    val composeNativeEnabled = project.properties.getOrDefault("com.mikepenz.composeNative.enabled", "true").toString().toBoolean()
+    val nativeEnabled = project.properties.getOrDefault("com.mikepenz.native.enabled", "false").toString().toBoolean()
     // COMPOSE COMPATIBLE TARGETS FALSE
 
     applyDefaultHierarchyTemplate()
