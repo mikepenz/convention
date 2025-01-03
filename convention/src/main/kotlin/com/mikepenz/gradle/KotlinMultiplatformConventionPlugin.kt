@@ -86,6 +86,7 @@ fun KotlinMultiplatformExtension.configureMultiplatformTargets(project: Project)
 
     if (nativeEnabled) {
         // tier 2
+        linuxX64()
         linuxArm64()
         watchosSimulatorArm64()
         watchosX64()
