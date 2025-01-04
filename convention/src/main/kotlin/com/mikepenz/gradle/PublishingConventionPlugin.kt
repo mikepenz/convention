@@ -1,9 +1,6 @@
 package com.mikepenz.gradle
 
-import com.vanniktech.maven.publish.JavadocJar
-import com.vanniktech.maven.publish.KotlinMultiplatform
-import com.vanniktech.maven.publish.MavenPublishBaseExtension
-import com.vanniktech.maven.publish.SonatypeHost
+import com.vanniktech.maven.publish.*
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
@@ -32,7 +29,13 @@ fun Project.configureDocumentation() {
 
 fun Project.configurePublishing() {
     mavenPublishing {
-        configure(KotlinMultiplatform(JavadocJar.Dokka("dokkaGeneratePublicationHtml"), true, androidVariantsToPublish = listOf("release")))
+        if (pluginManager.hasPlugin("org.jetbrains.kotlin.multiplatform")) {
+            configure(KotlinMultiplatform(JavadocJar.Dokka("dokkaGeneratePublicationHtml"), true, androidVariantsToPublish = listOf("release")))
+        } else if (pluginManager.hasPlugin("org.jetbrains.kotlin.android")) {
+            configure(AndroidSingleVariantLibrary())
+        } else {
+            throw IllegalStateException("Currently only supported for multiplatform or kotlin android projects")
+        }
 
         publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL, true)
         signAllPublications()
