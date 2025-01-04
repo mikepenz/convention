@@ -30,8 +30,8 @@ gradlePlugin {
         }
 
         register("kotlin") {
-            id = "com.mikepenz.convention.kotlin-android"
-            implementationClass = "com.mikepenz.gradle.KotlinAndroidConventionPlugin"
+            id = "com.mikepenz.convention.kotlin"
+            implementationClass = "com.mikepenz.gradle.KotlinConventionPlugin"
         }
 
         register("kotlinMultiplatform") {

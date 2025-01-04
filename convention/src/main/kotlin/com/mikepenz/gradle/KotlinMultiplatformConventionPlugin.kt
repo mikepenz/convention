@@ -107,9 +107,11 @@ fun KotlinMultiplatformExtension.configureMultiplatformTargets(project: Project)
 }
 
 fun Project.configureKotlin() {
+    val warningsAsErrors = project.properties.getOrDefault("com.mikepenz.kotlin.warningsAsErrors.enabled", "true").toString().toBoolean()
+
     tasks.withType<KotlinCompilationTask<*>>().configureEach {
         compilerOptions {
-            allWarningsAsErrors.set(true)
+            allWarningsAsErrors.set(warningsAsErrors)
 
             if (this is KotlinJvmCompilerOptions) {
                 jvmTarget.set(JvmTarget.JVM_17)

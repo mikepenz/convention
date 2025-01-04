@@ -6,6 +6,8 @@ import org.gradle.api.Project
 class AndroidApplicationConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
+            val compose = project.properties.getOrDefault("com.mikepenz.compose.enabled", "true").toString().toBoolean()
+
             with(pluginManager) {
                 apply("com.android.application")
             }
@@ -13,7 +15,7 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
             configureBaseAndroid()
 
             android {
-                buildFeatures.compose = true
+                buildFeatures.compose = compose
 
                 defaultConfig {
                     versionCode = property("VERSION_CODE").toString().toInt()
