@@ -4,6 +4,7 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 
 class AndroidApplicationConventionPlugin : Plugin<Project> {
+
     override fun apply(target: Project) {
         with(target) {
             val compose = project.properties.getOrDefault("com.mikepenz.compose.enabled", "true").toString().toBoolean()
@@ -30,7 +31,6 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
 
                     getByName("release") {
                         signingConfig = signingConfigs.findByName("release")
-
                         isMinifyEnabled = true
                         isShrinkResources = true
                         proguardFiles(
