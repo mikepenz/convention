@@ -22,6 +22,7 @@ compose-material = { module = "androidx.compose.material:material", version.ref 
 aboutlibraries-core = { module = "com.mikepenz:aboutlibraries-core", version.ref = "aboutlib" }
 aboutlibraries-compose = { module = "com.mikepenz:aboutlibraries-compose-m3", version.ref = "aboutlib" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
+kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
 kotlinx-coroutines-swing = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-swing", version.ref = "coroutines" }
 android-lint-gradle = { module = "androidx.lint:lint-gradle", version.ref = "lintGradle" }
 
