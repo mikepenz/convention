@@ -8,10 +8,10 @@ compose-multiplatform = "1.7.3"
 kotlin = "2.1.0"
 coroutines = "1.10.1"
 dokka = "2.0.0"
-aboutLibraries = "11.3.0"
 gradleMvnPublish = "0.30.0"
 screenshot = "0.0.1-alpha08"
 lintGradle = "1.0.0-alpha03"
+aboutLibraries = "11.4.0"
 
 [libraries]
 androidx-compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose" }
@@ -25,6 +25,7 @@ kotlinx-coroutines-swing = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-
 android-lint-gradle = { module = "androidx.lint:lint-gradle", version.ref = "lintGradle" }
 aboutlibraries-core = { module = "com.mikepenz:aboutlibraries-core", version.ref = "aboutLibraries" }
 aboutlibraries-view = { module = "com.mikepenz:aboutlibraries", version.ref = "aboutLibraries" }
+aboutlibraries-compose-m2 = { module = "com.mikepenz:aboutlibraries-compose-m2", version.ref = "aboutLibraries" }
 aboutlibraries-compose-m3 = { module = "com.mikepenz:aboutlibraries-compose-m3", version.ref = "aboutLibraries" }
 
 # Build logic dependencies
