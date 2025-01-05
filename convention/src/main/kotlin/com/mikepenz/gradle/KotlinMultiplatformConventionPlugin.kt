@@ -1,5 +1,7 @@
 package com.mikepenz.gradle
 
+import com.mikepenz.gradle.utils.readLocalProperties
+import com.mikepenz.gradle.utils.readPropertyOrElse
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.plugins.JavaPluginExtension
@@ -9,36 +11,41 @@ import org.gradle.kotlin.dsl.withType
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.*
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask
+import java.util.*
 
 class KotlinMultiplatformConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) = with(target) {
-        val multiplatformEnabled = project.properties.getOrDefault("com.mikepenz.multiplatform.enabled", "true").toString().toBoolean()
+        val localProperties = readLocalProperties()
+        val multiplatformEnabled = project.readPropertyOrElse("com.mikepenz.multiplatform.enabled", "true", localProperties).toBoolean()
         if (multiplatformEnabled) {
             with(pluginManager) {
                 apply("org.jetbrains.kotlin.multiplatform")
             }
 
-            val targetsEnabled = project.properties.getOrDefault("com.mikepenz.targets.enabled", "true").toString().toBoolean()
+            val targetsEnabled = project.readPropertyOrElse("com.mikepenz.targets.enabled", "true", localProperties).toBoolean()
             if (targetsEnabled) {
                 extensions.configure<KotlinMultiplatformExtension> {
-                    configureMultiplatformTargets(target)
+                    configureMultiplatformTargets(project = target, localProperties = localProperties)
                 }
             }
         }
 
         configureJava() // Configure Java to use our chosen language level. Kotlin will automatically pick this up
-        configureKotlin()
+        configureKotlin(localProperties = localProperties)
     }
 }
 
-fun KotlinMultiplatformExtension.configureMultiplatformTargets(project: Project) {
+fun KotlinMultiplatformExtension.configureMultiplatformTargets(
+    project: Project,
+    localProperties: Properties? = project.readLocalProperties(),
+) {
     // COMPOSE COMPATIBLE TARGETS START
-    val androidEnabled = project.properties.getOrDefault("com.mikepenz.android.enabled", "true").toString().toBoolean()
-    val jvmEnabled = project.properties.getOrDefault("com.mikepenz.jvm.enabled", "true").toString().toBoolean()
-    val wasmEnabled = project.properties.getOrDefault("com.mikepenz.wasm.enabled", "true").toString().toBoolean()
-    val jsEnabled = project.properties.getOrDefault("com.mikepenz.js.enabled", "true").toString().toBoolean()
-    val composeNativeEnabled = project.properties.getOrDefault("com.mikepenz.composeNative.enabled", "true").toString().toBoolean()
-    val nativeEnabled = project.properties.getOrDefault("com.mikepenz.native.enabled", "false").toString().toBoolean()
+    val androidEnabled = project.readPropertyOrElse("com.mikepenz.android.enabled", "true", localProperties).toBoolean()
+    val jvmEnabled = project.readPropertyOrElse("com.mikepenz.jvm.enabled", "true", localProperties).toBoolean()
+    val wasmEnabled = project.readPropertyOrElse("com.mikepenz.wasm.enabled", "true", localProperties).toBoolean()
+    val jsEnabled = project.readPropertyOrElse("com.mikepenz.js.enabled", "true", localProperties).toBoolean()
+    val composeNativeEnabled = project.readPropertyOrElse("com.mikepenz.composeNative.enabled", "true", localProperties).toBoolean()
+    val nativeEnabled = project.readPropertyOrElse("com.mikepenz.native.enabled", "false", localProperties).toBoolean()
     // COMPOSE COMPATIBLE TARGETS FALSE
 
     applyDefaultHierarchyTemplate()
@@ -106,8 +113,10 @@ fun KotlinMultiplatformExtension.configureMultiplatformTargets(project: Project)
     }
 }
 
-fun Project.configureKotlin() {
-    val warningsAsErrors = project.properties.getOrDefault("com.mikepenz.kotlin.warningsAsErrors.enabled", "true").toString().toBoolean()
+fun Project.configureKotlin(
+    localProperties: Properties? = readLocalProperties(),
+) {
+    val warningsAsErrors = project.readPropertyOrElse("com.mikepenz.kotlin.warningsAsErrors.enabled", "true", localProperties).toString().toBoolean()
 
     tasks.withType<KotlinCompilationTask<*>>().configureEach {
         compilerOptions {

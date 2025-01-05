@@ -17,8 +17,11 @@ internal fun Project.readLocalProperties(): Properties? {
 /**
  * reads from local.properties, otherwise falls back to project based properties
  */
-fun Project.readPropertyOrElse(key: String, default: String? = null): String? {
-    val properties = readLocalProperties()
-    val property = properties?.getProperty(key, null)
+fun Project.readPropertyOrElse(
+    key: String,
+    default: String? = null,
+    localProperties: Properties? = readLocalProperties(),
+): String? {
+    val property = localProperties?.getProperty(key, null)
     return property ?: if (project.hasProperty(key)) project.property(key)?.toString() else default
 }

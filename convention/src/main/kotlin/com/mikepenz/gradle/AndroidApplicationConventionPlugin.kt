@@ -1,13 +1,15 @@
 package com.mikepenz.gradle
 
+import com.mikepenz.gradle.utils.readLocalProperties
+import com.mikepenz.gradle.utils.readPropertyOrElse
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 
 class AndroidApplicationConventionPlugin : Plugin<Project> {
-
     override fun apply(target: Project) {
         with(target) {
-            val compose = project.properties.getOrDefault("com.mikepenz.compose.enabled", "true").toString().toBoolean()
+            val localProperties = readLocalProperties()
+            val compose = project.readPropertyOrElse("com.mikepenz.compose.enabled", "true", localProperties).toBoolean()
 
             with(pluginManager) {
                 apply("com.android.application")
@@ -24,13 +26,13 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
                     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
                 }
 
-                val signing = project.properties.getOrDefault("com.mikepenz.android.signing.enabled", "false").toString().toBoolean()
+                val signing = project.readPropertyOrElse("com.mikepenz.android.signing.enabled", "false", localProperties).toBoolean()
                 if (signing) {
-                    val variant = project.properties.getOrDefault("com.mikepenz.android.signing.variant", "").toString().let { ".$it" }
-                    val storeFileProp = project.properties.getOrDefault("com.mikepenz.android.signing.storeFile${variant}", "").toString()
-                    val storePasswordProp = project.properties.getOrDefault("com.mikepenz.android.signing.storePassword${variant}", "").toString()
-                    val keyAliasProp = project.properties.getOrDefault("com.mikepenz.android.signing.keyAlias${variant}", "").toString()
-                    val keyPasswordProp = project.properties.getOrDefault("com.mikepenz.android.signing.keyPassword${variant}", "").toString()
+                    val variant = project.readPropertyOrElse("com.mikepenz.android.signing.variant", "", localProperties).let { ".$it" }
+                    val storeFileProp = project.readPropertyOrElse("com.mikepenz.android.signing.storeFile${variant}", "", localProperties) ?: ""
+                    val storePasswordProp = project.readPropertyOrElse("com.mikepenz.android.signing.storePassword${variant}", "", localProperties)
+                    val keyAliasProp = project.readPropertyOrElse("com.mikepenz.android.signing.keyAlias${variant}", "", localProperties)
+                    val keyPasswordProp = project.readPropertyOrElse("com.mikepenz.android.signing.keyPassword${variant}", "", localProperties)
 
                     signingConfigs {
                         getByName("debug") {
