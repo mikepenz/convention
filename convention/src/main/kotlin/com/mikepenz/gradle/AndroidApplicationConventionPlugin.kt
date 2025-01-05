@@ -24,13 +24,13 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
                     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
                 }
 
-                val signing = project.properties.getOrDefault("com.mikepenz.android.signing.enabled", "true").toString().toBoolean()
+                val signing = project.properties.getOrDefault("com.mikepenz.android.signing.enabled", "false").toString().toBoolean()
                 if (signing) {
                     val variant = project.properties.getOrDefault("com.mikepenz.android.signing.variant", "").toString().let { ".$it" }
-                    val storeFileProp = project.properties.getOrDefault("com.mikepenz.android.signing.storeFile${variant}", "true").toString()
-                    val storePasswordProp = project.properties.getOrDefault("com.mikepenz.android.signing.storePassword${variant}", "true").toString()
-                    val keyAliasProp = project.properties.getOrDefault("com.mikepenz.android.signing.keyAlias${variant}", "true").toString()
-                    val keyPasswordProp = project.properties.getOrDefault("com.mikepenz.android.signing.keyPassword${variant}", "true").toString()
+                    val storeFileProp = project.properties.getOrDefault("com.mikepenz.android.signing.storeFile${variant}", "").toString()
+                    val storePasswordProp = project.properties.getOrDefault("com.mikepenz.android.signing.storePassword${variant}", "").toString()
+                    val keyAliasProp = project.properties.getOrDefault("com.mikepenz.android.signing.keyAlias${variant}", "").toString()
+                    val keyPasswordProp = project.properties.getOrDefault("com.mikepenz.android.signing.keyPassword${variant}", "").toString()
 
                     signingConfigs {
                         getByName("debug") {
