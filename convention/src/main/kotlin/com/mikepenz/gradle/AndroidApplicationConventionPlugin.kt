@@ -24,6 +24,30 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
                     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
                 }
 
+                val signing = project.properties.getOrDefault("com.mikepenz.android.signing.enabled", "true").toString().toBoolean()
+                if (signing) {
+                    val variant = project.properties.getOrDefault("com.mikepenz.android.signing.variant", "").toString().let { ".$it" }
+                    val storeFileProp = project.properties.getOrDefault("com.mikepenz.android.signing.storeFile${variant}", "true").toString()
+                    val storePasswordProp = project.properties.getOrDefault("com.mikepenz.android.signing.storePassword${variant}", "true").toString()
+                    val keyAliasProp = project.properties.getOrDefault("com.mikepenz.android.signing.keyAlias${variant}", "true").toString()
+                    val keyPasswordProp = project.properties.getOrDefault("com.mikepenz.android.signing.keyPassword${variant}", "true").toString()
+
+                    signingConfigs {
+                        getByName("debug") {
+                            storeFile = file(storeFileProp)
+                            storePassword = storePasswordProp
+                            keyAlias = keyAliasProp
+                            keyPassword = keyPasswordProp
+                        }
+                        create("release") {
+                            storeFile = file(storeFileProp)
+                            storePassword = storePasswordProp
+                            keyAlias = keyAliasProp
+                            keyPassword = keyPasswordProp
+                        }
+                    }
+                }
+
                 buildTypes {
                     getByName("debug") {
                         signingConfig = signingConfigs.findByName("debug")
