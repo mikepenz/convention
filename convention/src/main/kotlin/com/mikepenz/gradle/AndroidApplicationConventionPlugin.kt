@@ -28,7 +28,7 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
 
                 val signing = project.readPropertyOrElse("com.mikepenz.android.signing.enabled", "false", localProperties).toBoolean()
                 if (signing) {
-                    val variant = project.readPropertyOrElse("com.mikepenz.android.signing.variant", "", localProperties).let { ".$it" }
+                    val variant = project.readPropertyOrElse("com.mikepenz.android.signing.variant", null, localProperties)?.let { ".$it" } ?: ""
                     val storeFileProp = project.readPropertyOrElse("com.mikepenz.android.signing.storeFile${variant}", "", localProperties) ?: ""
                     val storePasswordProp = project.readPropertyOrElse("com.mikepenz.android.signing.storePassword${variant}", "", localProperties)
                     val keyAliasProp = project.readPropertyOrElse("com.mikepenz.android.signing.keyAlias${variant}", "", localProperties)
