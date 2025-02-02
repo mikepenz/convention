@@ -129,6 +129,20 @@ dependencyResolutionManagement {
 > The libs provided are required to be called `baseLibs` if you also intend to use the `convention` plugin.
 > The `convention` plugin uses the `baseLibs` catalog to resolve the versions of various plugins.
 
+# Publishing
+
+```bash
+# maven central
+./gradlew convention:publishAllPublicationsToMavenCentralRepository -PautomaticRelease=true
+./gradlew version-catalog:publishAllPublicationsToMavenCentralRepository -PautomaticRelease=true
+```
+
+```bash
+# maven local
+./gradlew convention:publishToMavenLocal
+./gradlew version-catalog:publishToMavenLocal
+```
+
 ## License
 
     Copyright 2025 Mike Penz

@@ -1,17 +1,18 @@
 [versions]
+conventionPlugin = "0.1.5"
 agp = "8.8.0"
 compileSdk = "35"
 minSdk = "21"
 targetSdk = "35"
-compose = "1.7.6"
+compose = "1.7.7"
 compose-multiplatform = "1.7.3"
-kotlin = "2.1.0"
+kotlin = "2.1.10"
 coroutines = "1.10.1"
 dokka = "2.0.0"
 gradleMvnPublish = "0.30.0"
 screenshot = "0.0.1-alpha08"
 lintGradle = "1.0.0-alpha03"
-aboutLibraries = "11.4.0"
+aboutLibraries = "11.5.0"
 
 [libraries]
 androidx-compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose" }
@@ -40,6 +41,7 @@ mavenPublish-gradlePlugin = { module = "com.vanniktech.maven.publish:com.vannikt
 dokka-gradlePlugin = { module = "org.jetbrains.dokka:dokka-gradle-plugin", version.ref = "dokka" }
 
 [plugins]
+conventionPlugin = { id = "com.mikepenz.convention.root", version.ref = "conventionPlugin" }
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
 androidTest = { id = "com.android.test", version.ref = "agp" }

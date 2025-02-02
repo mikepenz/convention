@@ -13,6 +13,6 @@ catalog {
 mavenPublishing {
     configure(VersionCatalog())
 
-    publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL, true)
+    publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL, hasProperty("automaticRelease"))
     signAllPublications()
 }
