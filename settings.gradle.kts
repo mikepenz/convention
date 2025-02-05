@@ -21,4 +21,5 @@ pluginManagement {
 }
 
 include(":convention")
+include(":settings-convention")
 include(":version-catalog")
