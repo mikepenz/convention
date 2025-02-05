@@ -4,6 +4,7 @@ import org.gradle.api.Plugin
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository
 import org.gradle.api.credentials.HttpHeaderCredentials
 import org.gradle.api.initialization.Settings
+import org.gradle.api.initialization.resolve.RepositoriesMode
 import org.gradle.api.logging.Logging
 import org.gradle.api.plugins.ExtraPropertiesExtension
 import org.gradle.authentication.http.HttpHeaderAuthentication
@@ -34,10 +35,6 @@ class SettingsConventionPlugin : Plugin<Settings> {
             IllegalArgumentException("This plugin requires at least one repository to be set as 'settings.artifactory.repositories'. (this is a comma seperated list)")
         }.split(",").map { it.trim() }
 
-        val versionCatalog = properties.getOrElse("settings.artifactory.versionCatalog.coordinate") {
-            logger.info("No version catalog coordinate found (For property: 'settings.artifactory.versionCatalog.coordinate'). Skipping version catalog configuration.")
-            ""
-        }
 
         val configure: MavenArtifactRepository.() -> Unit = {
             credentials(HttpHeaderCredentials::class.java) {
@@ -71,7 +68,16 @@ class SettingsConventionPlugin : Plugin<Settings> {
             }
         }
 
+        val versionCatalog = properties.getOrElse("settings.artifactory.versionCatalog.coordinate") {
+            logger.info("No version catalog coordinate found (For property: 'settings.artifactory.versionCatalog.coordinate'). Skipping version catalog configuration.")
+            ""
+        }
+
         dependencyResolutionManagement {
+            // if project defines. use these
+            @Suppress("UnstableApiUsage")
+            repositoriesMode.set(RepositoriesMode.PREFER_PROJECT)
+
             @Suppress("UnstableApiUsage")
             repositories {
                 repositories.onEach {
@@ -88,7 +94,7 @@ class SettingsConventionPlugin : Plugin<Settings> {
             }
 
             versionCatalogs {
-                if (versionCatalog.isNotBlank()) {
+                if (versionCatalog.isNotBlank() && versionCatalog != "false") {
                     val versionCatalogVersion = properties.getOrNull("settings.artifactory.versionCatalog.propKeys")
                         ?.let { keys -> keys.split(",").map { it.trim() } } ?: listOf("settings.artifactory.versionCatalogVersion")
 
