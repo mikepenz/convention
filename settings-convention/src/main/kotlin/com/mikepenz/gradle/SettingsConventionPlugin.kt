@@ -34,8 +34,8 @@ class SettingsConventionPlugin : Plugin<Settings> {
             IllegalArgumentException("This plugin requires at least one repository to be set as 'settings.artifactory.repositories'. (this is a comma seperated list)")
         }.split(",").map { it.trim() }
 
-        val versionCatalog = properties.getOrElse("settings.artifactory.versionCatalogCoordinate") {
-            logger.info("No version catalog coordinate found. Skipping version catalog configuration.")
+        val versionCatalog = properties.getOrElse("settings.artifactory.versionCatalog.coordinate") {
+            logger.info("No version catalog coordinate found (For property: 'settings.artifactory.versionCatalog.coordinate'). Skipping version catalog configuration.")
             ""
         }
 
