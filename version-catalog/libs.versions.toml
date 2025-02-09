@@ -1,5 +1,5 @@
 [versions]
-conventionPlugin = "0.1.5"
+conventionPlugin = "0.2.0"
 agp = "8.8.0"
 compileSdk = "35"
 minSdk = "21"
@@ -13,6 +13,7 @@ gradleMvnPublish = "0.30.0"
 screenshot = "0.0.1-alpha08"
 lintGradle = "1.0.0-alpha03"
 aboutLibraries = "11.5.0"
+binaryCompatiblityValidator = "0.17.0"
 
 [libraries]
 androidx-compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose" }
@@ -39,6 +40,7 @@ composeCompiler-gradlePlugin = { module = "org.jetbrains.kotlin:compose-compiler
 compose-gradlePlugin = { module = "org.jetbrains.compose:compose-gradle-plugin", version.ref = "compose-multiplatform" }
 mavenPublish-gradlePlugin = { module = "com.vanniktech.maven.publish:com.vanniktech.maven.publish.gradle.plugin", version.ref = "gradleMvnPublish" }
 dokka-gradlePlugin = { module = "org.jetbrains.dokka:dokka-gradle-plugin", version.ref = "dokka" }
+binaryCompatiblity-gradlePlugin = { module = "org.jetbrains.kotlinx.binary-compatibility-validator:org.jetbrains.kotlinx.binary-compatibility-validator.gradle.plugin", version.ref = "binaryCompatiblityValidator" }
 
 [plugins]
 conventionPlugin = { id = "com.mikepenz.convention.root", version.ref = "conventionPlugin" }
@@ -55,6 +57,7 @@ dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
 aboutLibraries = { id = "com.mikepenz.aboutlibraries.plugin", version.ref = "aboutLibraries" }
 mavenPublish = { id = "com.vanniktech.maven.publish", version.ref = "gradleMvnPublish" }
 screenshot = { id = "com.android.compose.screenshot", version.ref = "screenshot" }
+binaryCompatiblityValidator = { id = "org.jetbrains.kotlinx.binary-compatibility-validator", version.ref = "binaryCompatiblityValidator" }
 
 [bundles]
 aboutlibs = ["aboutlibraries-core", "aboutlibraries-compose-m3"]
