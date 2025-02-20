@@ -12,7 +12,7 @@ dokka = "2.0.0"
 gradleMvnPublish = "0.30.0"
 screenshot = "0.0.1-alpha08"
 lintGradle = "1.0.0-alpha03"
-aboutLibraries = "11.5.0"
+aboutLibraries = "11.6.3"
 binaryCompatiblityValidator = "0.17.0"
 
 [libraries]
