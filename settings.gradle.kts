@@ -16,7 +16,7 @@ dependencyResolutionManagement {
 
 pluginManagement {
     plugins {
-        id("com.vanniktech.maven.publish") version "0.30.0" apply false
+        id("com.vanniktech.maven.publish") version "0.31.0" apply false
     }
 }
 
