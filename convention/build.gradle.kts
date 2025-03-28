@@ -21,6 +21,7 @@ dependencies {
     compileOnly(libs.mavenPublish.gradlePlugin)
     compileOnly(libs.dokka.gradlePlugin)
     compileOnly(libs.binaryCompatiblity.gradlePlugin)
+    compileOnly(libs.versionCatalogUpdate.gradlePlugin)
 }
 
 gradlePlugin {

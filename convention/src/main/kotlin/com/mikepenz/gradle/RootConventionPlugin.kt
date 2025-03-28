@@ -3,6 +3,7 @@ package com.mikepenz.gradle
 import com.mikepenz.gradle.utils.readLocalProperties
 import com.mikepenz.gradle.utils.readPropertyOrElse
 import kotlinx.validation.ApiValidationExtension
+import nl.littlerobots.vcu.plugin.versionCatalogUpdate
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
@@ -22,6 +23,19 @@ class RootConventionPlugin : Plugin<Project> {
                 }
 
                 ignoredProjects.addAll(allprojects.filter { it.name.contains("app") }.map { it.name })
+            }
+        }
+
+        val versionCatalogUpdateEnabled = project.readPropertyOrElse("com.mikepenz.version-catalog-update.enabled", "false", localProperties).toBoolean()
+        if (versionCatalogUpdateEnabled) {
+            pluginManager.apply("nl.littlerobots.version-catalog-update")
+
+            versionCatalogUpdate {
+                sortByKey.set(false)
+
+                keep {
+                    keepUnusedVersions.set(true)
+                }
             }
         }
     }

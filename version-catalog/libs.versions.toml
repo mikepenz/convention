@@ -14,6 +14,7 @@ screenshot = "0.0.1-alpha09"
 lintGradle = "1.0.0-alpha03"
 aboutLibraries = "11.6.3"
 binaryCompatiblityValidator = "0.17.0"
+versionCatalogUpdate = "1.0.0"
 
 [libraries]
 androidx-compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose" }
@@ -41,6 +42,7 @@ compose-gradlePlugin = { module = "org.jetbrains.compose:compose-gradle-plugin",
 mavenPublish-gradlePlugin = { module = "com.vanniktech.maven.publish:com.vanniktech.maven.publish.gradle.plugin", version.ref = "gradleMvnPublish" }
 dokka-gradlePlugin = { module = "org.jetbrains.dokka:dokka-gradle-plugin", version.ref = "dokka" }
 binaryCompatiblity-gradlePlugin = { module = "org.jetbrains.kotlinx.binary-compatibility-validator:org.jetbrains.kotlinx.binary-compatibility-validator.gradle.plugin", version.ref = "binaryCompatiblityValidator" }
+versionCatalogUpdate-gradlePlugin = { module = "nl.littlerobots.version-catalog-update:nl.littlerobots.version-catalog-update.gradle.plugin", version.ref = "versionCatalogUpdate" }
 
 [plugins]
 conventionPlugin = { id = "com.mikepenz.convention.root", version.ref = "conventionPlugin" }
@@ -58,6 +60,7 @@ aboutLibraries = { id = "com.mikepenz.aboutlibraries.plugin", version.ref = "abo
 mavenPublish = { id = "com.vanniktech.maven.publish", version.ref = "gradleMvnPublish" }
 screenshot = { id = "com.android.compose.screenshot", version.ref = "screenshot" }
 binaryCompatiblityValidator = { id = "org.jetbrains.kotlinx.binary-compatibility-validator", version.ref = "binaryCompatiblityValidator" }
+versionCatalogUpdate = { id = "nl.littlerobots.version-catalog-update", version.ref = "versionCatalogUpdate" }
 
 [bundles]
 aboutlibs = ["aboutlibraries-core", "aboutlibraries-compose-m3"]
