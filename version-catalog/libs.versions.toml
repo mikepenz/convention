@@ -1,6 +1,6 @@
 [versions]
 conventionPlugin = "0.2.0"
-agp = "8.9.0"
+agp = "8.9.1"
 compileSdk = "35"
 minSdk = "21"
 targetSdk = "35"
@@ -30,7 +30,6 @@ aboutlibraries-core = { module = "com.mikepenz:aboutlibraries-core", version.ref
 aboutlibraries-view = { module = "com.mikepenz:aboutlibraries", version.ref = "aboutLibraries" }
 aboutlibraries-compose-m2 = { module = "com.mikepenz:aboutlibraries-compose-m2", version.ref = "aboutLibraries" }
 aboutlibraries-compose-m3 = { module = "com.mikepenz:aboutlibraries-compose-m3", version.ref = "aboutLibraries" }
-
 # Build logic dependencies
 android-gradlePlugin = { module = "com.android.tools.build:gradle", version.ref = "agp" }
 android-lint-gradlePlugin = { module = "com.android.lint:com.android.lint.gradle.plugin", version.ref = "agp" }
@@ -63,5 +62,11 @@ binaryCompatiblityValidator = { id = "org.jetbrains.kotlinx.binary-compatibility
 versionCatalogUpdate = { id = "nl.littlerobots.version-catalog-update", version.ref = "versionCatalogUpdate" }
 
 [bundles]
-aboutlibs = ["aboutlibraries-core", "aboutlibraries-compose-m3"]
-coroutines-android = ["kotlinx-coroutines-core", "kotlinx-coroutines-android"]
+aboutlibs = [
+    "aboutlibraries-compose-m3",
+    "aboutlibraries-core",
+]
+coroutines-android = [
+    "kotlinx-coroutines-android",
+    "kotlinx-coroutines-core",
+]
