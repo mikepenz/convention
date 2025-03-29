@@ -25,8 +25,8 @@ class RootConventionPlugin : Plugin<Project> {
 
                 ignoredProjects.addAll(allprojects.filter {
                     val projectLocalProperties = it.readLocalProperties()
-                    val binaryCompatibilityValidatorEnabled = it.readPropertyOrElse(flagKey, "true", projectLocalProperties).toBoolean()
-                    if (binaryCompatibilityValidatorEnabled) it.name.contains("app") else true
+                    val projBinaryCompatibilityValidatorEnabled = it.readPropertyOrElse(flagKey, "true", projectLocalProperties).toBoolean()
+                    if (projBinaryCompatibilityValidatorEnabled) it.name.contains("app") else true
                 }.map { it.name })
             }
         }
