@@ -10,8 +10,9 @@ import org.gradle.kotlin.dsl.configure
 
 class RootConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) = with(target) {
+        val flagKey = "com.mikepenz.binary-compatibility-validator.enabled"
         val localProperties = readLocalProperties()
-        val binaryCompatibilityValidatorEnabled = project.readPropertyOrElse("com.mikepenz.binary-compatibility-validator.enabled", "false", localProperties).toBoolean()
+        val binaryCompatibilityValidatorEnabled = project.readPropertyOrElse(flagKey, "false", localProperties).toBoolean()
 
         if (binaryCompatibilityValidatorEnabled) {
             pluginManager.apply("org.jetbrains.kotlinx.binary-compatibility-validator")
@@ -22,7 +23,11 @@ class RootConventionPlugin : Plugin<Project> {
                     enabled = true
                 }
 
-                ignoredProjects.addAll(allprojects.filter { it.name.contains("app") }.map { it.name })
+                ignoredProjects.addAll(allprojects.filter {
+                    val projectLocalProperties = it.readLocalProperties()
+                    val binaryCompatibilityValidatorEnabled = it.readPropertyOrElse(flagKey, "true", projectLocalProperties).toBoolean()
+                    if (binaryCompatibilityValidatorEnabled) it.name.contains("app") else true
+                }.map { it.name })
             }
         }
 
