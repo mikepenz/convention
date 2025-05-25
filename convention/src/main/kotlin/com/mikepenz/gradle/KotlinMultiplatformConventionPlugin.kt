@@ -2,6 +2,7 @@ package com.mikepenz.gradle
 
 import com.mikepenz.gradle.utils.readLocalProperties
 import com.mikepenz.gradle.utils.readPropertyOrElse
+import compat.patrouille.CompatPatrouilleExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
@@ -15,13 +16,13 @@ import java.util.*
 class KotlinMultiplatformConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) = with(target) {
         val localProperties = readLocalProperties()
-        val multiplatformEnabled = project.readPropertyOrElse("com.mikepenz.multiplatform.enabled", "true", localProperties).toBoolean()
+        val multiplatformEnabled = readPropertyOrElse("com.mikepenz.multiplatform.enabled", "true", localProperties).toBoolean()
         if (multiplatformEnabled) {
             with(pluginManager) {
                 apply("org.jetbrains.kotlin.multiplatform")
             }
 
-            val targetsEnabled = project.readPropertyOrElse("com.mikepenz.targets.enabled", "true", localProperties).toBoolean()
+            val targetsEnabled = readPropertyOrElse("com.mikepenz.targets.enabled", "true", localProperties).toBoolean()
             if (targetsEnabled) {
                 extensions.configure<KotlinMultiplatformExtension> {
                     configureMultiplatformTargets(project = target, localProperties = localProperties)
@@ -29,7 +30,7 @@ class KotlinMultiplatformConventionPlugin : Plugin<Project> {
             }
         }
 
-        val hotReloadEnabled = project.readPropertyOrElse("com.mikepenz.hotreload.enabled", "false", localProperties).toBoolean()
+        val hotReloadEnabled = readPropertyOrElse("com.mikepenz.hotreload.enabled", "false", localProperties).toBoolean()
         if (hotReloadEnabled) {
             with(pluginManager) {
                 apply("org.jetbrains.compose")
@@ -129,4 +130,13 @@ fun Project.configureKotlin(
             allWarningsAsErrors.set(warningsAsErrors)
         }
     }
+
+    val javaVersion = readPropertyOrElse("com.mikepenz.java.version", "17", localProperties)!!.toInt()
+    val kotlinVersion = readPropertyOrElse("com.mikepenz.kotlin.version", "2.1.21", localProperties)!!
+    compatPatrouille {
+        java(javaVersion)
+        kotlin(kotlinVersion)
+    }
 }
+
+internal fun Project.compatPatrouille(action: CompatPatrouilleExtension.() -> Unit) = extensions.configure<CompatPatrouilleExtension>(action)

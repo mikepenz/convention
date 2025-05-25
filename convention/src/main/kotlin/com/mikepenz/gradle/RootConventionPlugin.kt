@@ -51,16 +51,7 @@ class RootConventionPlugin : Plugin<Project> {
                 this.pluginManager.apply("org.jlleitschuh.gradle.ktlint")
             }
         }
-
-        val javaVersion = project.readPropertyOrElse("com.mikepenz.java.version", "17", localProperties)!!.toInt()
-        val kotlinVersion = project.readPropertyOrElse("com.mikepenz.kotlin.version", "2.1.21", localProperties)!!
-        compatPatrouille {
-            java(javaVersion)
-            kotlin(kotlinVersion)
-        }
     }
 }
 
 internal fun Project.apiValidation(action: ApiValidationExtension.() -> Unit) = extensions.configure<ApiValidationExtension>(action)
-
-internal fun Project.compatPatrouille(action: CompatPatrouilleExtension.() -> Unit) = extensions.configure<CompatPatrouilleExtension>(action)
