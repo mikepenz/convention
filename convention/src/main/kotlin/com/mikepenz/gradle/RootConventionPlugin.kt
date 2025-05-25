@@ -46,9 +46,11 @@ class RootConventionPlugin : Plugin<Project> {
         val javaResolverResolver = project.readPropertyOrElse("com.mikepenz.ktlint.enabled", "false", localProperties).toBoolean()
         if (javaResolverResolver) {
             pluginManager.apply("org.jlleitschuh.gradle.ktlint")
+            subprojects {
+                this.pluginManager.apply("org.jlleitschuh.gradle.ktlint")
+            }
         }
     }
 }
-
 
 internal fun Project.apiValidation(action: ApiValidationExtension.() -> Unit) = extensions.configure<ApiValidationExtension>(action)
