@@ -13,7 +13,6 @@ class RootConventionPlugin : Plugin<Project> {
         val flagKey = "com.mikepenz.binary-compatibility-validator.enabled"
         val localProperties = readLocalProperties()
         val binaryCompatibilityValidatorEnabled = project.readPropertyOrElse(flagKey, "false", localProperties).toBoolean()
-
         if (binaryCompatibilityValidatorEnabled) {
             pluginManager.apply("org.jetbrains.kotlinx.binary-compatibility-validator")
 
@@ -42,6 +41,11 @@ class RootConventionPlugin : Plugin<Project> {
                     keepUnusedVersions.set(true)
                 }
             }
+        }
+
+        val javaResolverResolver = project.readPropertyOrElse("com.mikepenz.ktlint.enabled", "false", localProperties).toBoolean()
+        if (javaResolverResolver) {
+            pluginManager.apply("org.jlleitschuh.gradle.ktlint")
         }
     }
 }

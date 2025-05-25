@@ -30,6 +30,14 @@ class KotlinMultiplatformConventionPlugin : Plugin<Project> {
             }
         }
 
+        val hotReloadEnabled = project.readPropertyOrElse("com.mikepenz.hotreload.enabled", "false", localProperties).toBoolean()
+        if (hotReloadEnabled) {
+            with(pluginManager) {
+                apply("org.jetbrains.compose")
+                apply("org.jetbrains.compose.hot-reload")
+            }
+        }
+
         configureJava() // Configure Java to use our chosen language level. Kotlin will automatically pick this up
         configureKotlin(localProperties = localProperties)
     }
