@@ -17,11 +17,6 @@ fun Project.configureBaseAndroid() {
             targetSdk = libs.findVersion("targetSdk").get().requiredVersion.toInt()
         }
 
-        compileOptions {
-            sourceCompatibility = JavaVersion.VERSION_17
-            targetCompatibility = JavaVersion.VERSION_17
-        }
-
         buildTypes {
             getByName("release") {
                 isMinifyEnabled = false

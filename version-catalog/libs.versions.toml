@@ -18,6 +18,7 @@ binaryCompatiblityValidator = "0.17.0"
 versionCatalogUpdate = "1.0.0"
 ktlint = "12.3.0"
 composeHotReload = "1.0.0-alpha10"
+compatPatrouille = "0.0.0"
 
 [libraries]
 androidx-compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose" }
@@ -46,6 +47,7 @@ mavenPublish-gradlePlugin = { module = "com.vanniktech.maven.publish:com.vannikt
 dokka-gradlePlugin = { module = "org.jetbrains.dokka:dokka-gradle-plugin", version.ref = "dokka" }
 binaryCompatiblity-gradlePlugin = { module = "org.jetbrains.kotlinx.binary-compatibility-validator:org.jetbrains.kotlinx.binary-compatibility-validator.gradle.plugin", version.ref = "binaryCompatiblityValidator" }
 versionCatalogUpdate-gradlePlugin = { module = "nl.littlerobots.version-catalog-update:nl.littlerobots.version-catalog-update.gradle.plugin", version.ref = "versionCatalogUpdate" }
+compatPatrouille-gradlePlugin = { module = "com.gradleup.compat.patrouille:com.gradleup.compat.patrouille.gradle.plugin", version.ref = "compatPatrouille" }
 
 [plugins]
 conventionPlugin = { id = "com.mikepenz.convention.root", version.ref = "conventionPlugin" }
@@ -66,6 +68,7 @@ screenshot = { id = "com.android.compose.screenshot", version.ref = "screenshot"
 binaryCompatiblityValidator = { id = "org.jetbrains.kotlinx.binary-compatibility-validator", version.ref = "binaryCompatiblityValidator" }
 versionCatalogUpdate = { id = "nl.littlerobots.version-catalog-update", version.ref = "versionCatalogUpdate" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
+compatPatrouille = { id = "com.gradleup.compat.patrouille", version.ref = "compatPatrouille" }
 
 [bundles]
 aboutlibs = [

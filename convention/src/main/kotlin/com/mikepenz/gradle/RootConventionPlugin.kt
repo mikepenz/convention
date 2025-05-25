@@ -2,6 +2,7 @@ package com.mikepenz.gradle
 
 import com.mikepenz.gradle.utils.readLocalProperties
 import com.mikepenz.gradle.utils.readPropertyOrElse
+import compat.patrouille.CompatPatrouilleExtension
 import kotlinx.validation.ApiValidationExtension
 import nl.littlerobots.vcu.plugin.versionCatalogUpdate
 import org.gradle.api.Plugin
@@ -50,7 +51,16 @@ class RootConventionPlugin : Plugin<Project> {
                 this.pluginManager.apply("org.jlleitschuh.gradle.ktlint")
             }
         }
+
+        val javaVersion = project.readPropertyOrElse("com.mikepenz.java.version", "17", localProperties)!!.toInt()
+        val kotlinVersion = project.readPropertyOrElse("com.mikepenz.kotlin.version", "2.1.21", localProperties)!!
+        compatPatrouille {
+            java(javaVersion)
+            kotlin(kotlinVersion)
+        }
     }
 }
 
 internal fun Project.apiValidation(action: ApiValidationExtension.() -> Unit) = extensions.configure<ApiValidationExtension>(action)
+
+internal fun Project.compatPatrouille(action: CompatPatrouilleExtension.() -> Unit) = extensions.configure<CompatPatrouilleExtension>(action)

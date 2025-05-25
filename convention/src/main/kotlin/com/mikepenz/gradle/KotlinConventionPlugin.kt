@@ -26,7 +26,6 @@ class KotlinConventionPlugin : Plugin<Project> {
                 }
             }
 
-            configureJava() // Configure Java to use our chosen language level. Kotlin will automatically pick this up
             configureKotlin(localProperties = localProperties)
         }
     }

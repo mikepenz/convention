@@ -4,12 +4,11 @@ import com.mikepenz.gradle.utils.readLocalProperties
 import com.mikepenz.gradle.utils.readPropertyOrElse
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.api.plugins.JavaPluginExtension
-import org.gradle.jvm.toolchain.JavaLanguageVersion
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.withType
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
-import org.jetbrains.kotlin.gradle.dsl.*
+import org.jetbrains.kotlin.gradle.dsl.JsModuleKind
+import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask
 import java.util.*
 
@@ -38,7 +37,6 @@ class KotlinMultiplatformConventionPlugin : Plugin<Project> {
             }
         }
 
-        configureJava() // Configure Java to use our chosen language level. Kotlin will automatically pick this up
         configureKotlin(localProperties = localProperties)
     }
 }
@@ -129,25 +127,6 @@ fun Project.configureKotlin(
     tasks.withType<KotlinCompilationTask<*>>().configureEach {
         compilerOptions {
             allWarningsAsErrors.set(warningsAsErrors)
-
-            if (this is KotlinJvmCompilerOptions) {
-                jvmTarget.set(JvmTarget.JVM_17)
-            }
-
-            languageVersion.set(KotlinVersion.KOTLIN_2_0)
-            apiVersion.set(KotlinVersion.KOTLIN_2_0)
         }
     }
 }
-
-fun Project.configureJava() {
-    if (extensions.findByType(JavaPluginExtension::class.java) != null) {
-        java {
-            toolchain {
-                languageVersion.set(JavaLanguageVersion.of(17))
-            }
-        }
-    }
-}
-
-private fun Project.java(action: JavaPluginExtension.() -> Unit) = extensions.configure<JavaPluginExtension>(action)
