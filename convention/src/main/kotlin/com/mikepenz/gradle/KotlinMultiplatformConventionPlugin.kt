@@ -131,11 +131,20 @@ fun Project.configureKotlin(
         }
     }
 
-    val javaVersion = readPropertyOrElse("com.mikepenz.java.version", "17", localProperties)!!.toInt()
-    val kotlinVersion = readPropertyOrElse("com.mikepenz.kotlin.version", "2.1.21", localProperties)!!
-    compatPatrouille {
-        java(javaVersion)
-        kotlin(kotlinVersion)
+
+    val compatPatrouille = project.readPropertyOrElse("com.mikepenz.compatPatrouille.enabled", "true", localProperties).toString().toBoolean()
+    if (compatPatrouille) {
+        val javaVersion = readPropertyOrElse("com.mikepenz.java.version", "17", localProperties)!!.toInt()
+        val kotlinVersion = readPropertyOrElse("com.mikepenz.kotlin.version", "2.1.21", localProperties)!!
+
+        with(pluginManager) {
+            apply("com.gradleup.compat.patrouille")
+        }
+
+        compatPatrouille {
+            java(javaVersion)
+            kotlin(kotlinVersion)
+        }
     }
 }
 
