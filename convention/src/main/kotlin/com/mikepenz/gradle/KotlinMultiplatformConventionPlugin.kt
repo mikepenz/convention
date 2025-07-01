@@ -43,6 +43,8 @@ class KotlinMultiplatformConventionPlugin : Plugin<Project> {
             }
         }
 
+        val compatPatrouille = project.readPropertyOrElse("com.mikepenz.compatPatrouille.enabled", "true", localProperties).toString().toBoolean()
+        if (!compatPatrouille) configureJava(localProperties = localProperties)
         configureKotlin(localProperties = localProperties)
     }
 }
