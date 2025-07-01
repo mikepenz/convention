@@ -27,6 +27,8 @@ class KotlinConventionPlugin : Plugin<Project> {
                 }
             }
 
+            val compatPatrouille = project.readPropertyOrElse("com.mikepenz.compatPatrouille.enabled", "true", localProperties).toString().toBoolean()
+            if(!compatPatrouille) configureJava(localProperties = localProperties) // Configure Java to use our chosen language level. Kotlin will automatically pick this up
             configureKotlin(localProperties = localProperties)
         }
     }

@@ -15,7 +15,7 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
                 apply("com.android.application")
             }
 
-            configureBaseAndroid()
+            configureBaseAndroid(localProperties)
 
             android {
                 buildFeatures.compose = compose

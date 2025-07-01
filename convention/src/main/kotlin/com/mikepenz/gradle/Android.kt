@@ -4,17 +4,28 @@ import com.android.build.api.variant.AndroidComponentsExtension
 import com.android.build.api.variant.HasUnitTestBuilder
 import com.android.build.gradle.BaseExtension
 import com.mikepenz.gradle.utils.libs
+import com.mikepenz.gradle.utils.readPropertyOrElse
 import org.gradle.api.JavaVersion
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
+import java.util.Properties
 
-fun Project.configureBaseAndroid() {
+fun Project.configureBaseAndroid(localProperties: Properties?) {
     android {
         compileSdkVersion(libs.findVersion("compileSdk").get().requiredVersion.toInt())
 
         defaultConfig {
             minSdk = libs.findVersion("minSdk").get().requiredVersion.toInt()
             targetSdk = libs.findVersion("targetSdk").get().requiredVersion.toInt()
+        }
+
+        val compatPatrouille = project.readPropertyOrElse("com.mikepenz.compatPatrouille.enabled", "true", localProperties).toString().toBoolean()
+        if (!compatPatrouille) {
+            val javaVersion = readPropertyOrElse("com.mikepenz.java.version", "17", localProperties)!!.toInt()
+            compileOptions {
+                sourceCompatibility = JavaVersion.forClassVersion(javaVersion + 44)
+                targetCompatibility = JavaVersion.forClassVersion(javaVersion + 44)
+            }
         }
 
         buildTypes {

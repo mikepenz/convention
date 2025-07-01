@@ -5,13 +5,18 @@ import com.mikepenz.gradle.utils.readPropertyOrElse
 import compat.patrouille.CompatPatrouilleExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.plugins.JavaPluginExtension
+import org.gradle.jvm.toolchain.JavaLanguageVersion
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.withType
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JsModuleKind
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.dsl.KotlinJvmCompilerOptions
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
+import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask
-import java.util.*
+import java.util.Properties
 
 class KotlinMultiplatformConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) = with(target) {
@@ -124,19 +129,27 @@ fun Project.configureKotlin(
     localProperties: Properties? = readLocalProperties(),
 ) {
     val warningsAsErrors = project.readPropertyOrElse("com.mikepenz.kotlin.warningsAsErrors.enabled", "true", localProperties).toString().toBoolean()
+    val compatPatrouille = project.readPropertyOrElse("com.mikepenz.compatPatrouille.enabled", "true", localProperties).toString().toBoolean()
+    val javaVersion = readPropertyOrElse("com.mikepenz.java.version", "17", localProperties)!!.toInt()
+    val kotlinVersion = readPropertyOrElse("com.mikepenz.kotlin.version", "2.1.21", localProperties)!!
 
     tasks.withType<KotlinCompilationTask<*>>().configureEach {
         compilerOptions {
             allWarningsAsErrors.set(warningsAsErrors)
+
+            if (!compatPatrouille) {
+                if (this is KotlinJvmCompilerOptions) {
+                    jvmTarget.set(JvmTarget.fromTarget("$javaVersion"))
+                }
+
+                languageVersion.set(KotlinVersion.fromVersion(kotlinVersion))
+                apiVersion.set(KotlinVersion.fromVersion(kotlinVersion))
+            }
         }
     }
 
 
-    val compatPatrouille = project.readPropertyOrElse("com.mikepenz.compatPatrouille.enabled", "true", localProperties).toString().toBoolean()
     if (compatPatrouille) {
-        val javaVersion = readPropertyOrElse("com.mikepenz.java.version", "17", localProperties)!!.toInt()
-        val kotlinVersion = readPropertyOrElse("com.mikepenz.kotlin.version", "2.1.21", localProperties)!!
-
         with(pluginManager) {
             apply("com.gradleup.compat.patrouille")
         }
@@ -147,5 +160,18 @@ fun Project.configureKotlin(
         }
     }
 }
+
+fun Project.configureJava(localProperties: Properties?) {
+    if (extensions.findByType(JavaPluginExtension::class.java) != null) {
+        java {
+            toolchain {
+                val javaVersion = readPropertyOrElse("com.mikepenz.java.version", "17", localProperties)!!.toInt()
+                languageVersion.set(JavaLanguageVersion.of(javaVersion))
+            }
+        }
+    }
+}
+
+private fun Project.java(action: JavaPluginExtension.() -> Unit) = extensions.configure<JavaPluginExtension>(action)
 
 internal fun Project.compatPatrouille(action: CompatPatrouilleExtension.() -> Unit) = extensions.configure<CompatPatrouilleExtension>(action)

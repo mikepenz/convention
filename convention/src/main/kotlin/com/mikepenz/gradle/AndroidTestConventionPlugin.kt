@@ -1,5 +1,6 @@
 package com.mikepenz.gradle
 
+import com.mikepenz.gradle.utils.readLocalProperties
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 
@@ -10,7 +11,8 @@ class AndroidTestConventionPlugin : Plugin<Project> {
                 apply("com.android.test")
             }
 
-            configureBaseAndroid()
+            val localProperties = readLocalProperties()
+            configureBaseAndroid(localProperties)
         }
     }
 }
