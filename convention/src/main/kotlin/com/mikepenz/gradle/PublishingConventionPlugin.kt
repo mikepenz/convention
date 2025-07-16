@@ -37,7 +37,7 @@ fun Project.configurePublishing() {
             throw IllegalStateException("Currently only supported for multiplatform or kotlin android projects")
         }
 
-        publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL, true)
+        publishToMavenCentral(true)
         signAllPublications()
     }
 
