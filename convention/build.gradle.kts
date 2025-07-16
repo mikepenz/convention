@@ -1,6 +1,5 @@
 import com.vanniktech.maven.publish.GradlePlugin
 import com.vanniktech.maven.publish.JavadocJar
-import com.vanniktech.maven.publish.SonatypeHost
 
 plugins {
     `kotlin-dsl`
@@ -77,6 +76,6 @@ mavenPublishing {
         )
     )
 
-    publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL, hasProperty("automaticRelease"))
+    publishToMavenCentral(hasProperty("automaticRelease"))
     signAllPublications()
 }
