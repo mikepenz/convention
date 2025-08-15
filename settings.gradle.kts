@@ -1,6 +1,7 @@
 rootProject.name = "convention-root"
 
 dependencyResolutionManagement {
+    @Suppress("UnstableApiUsage")
     repositories {
         mavenCentral()
         google()
@@ -16,7 +17,7 @@ dependencyResolutionManagement {
 
 pluginManagement {
     plugins {
-        id("com.vanniktech.maven.publish") version "0.33.0" apply false
+        id("com.vanniktech.maven.publish") version "0.34.0" apply false
         id("nl.littlerobots.version-catalog-update") version "1.0.0"
     }
 }

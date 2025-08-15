@@ -1,10 +1,13 @@
 package com.mikepenz.gradle
 
-import com.vanniktech.maven.publish.*
+import com.vanniktech.maven.publish.AndroidSingleVariantLibrary
+import com.vanniktech.maven.publish.JavadocJar
+import com.vanniktech.maven.publish.KotlinMultiplatform
+import com.vanniktech.maven.publish.MavenPublishBaseExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.kotlin.dsl.configure
-import org.gradle.kotlin.dsl.invoke
+import org.gradle.api.publish.PublishingExtension
+import org.jetbrains.dokka.gradle.DokkaExtension
 
 class PublishingConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) = with(target) {
@@ -18,10 +21,8 @@ class PublishingConventionPlugin : Plugin<Project> {
 
 fun Project.configureDocumentation() {
     dokka {
-        dokkaSourceSets {
-            configureEach {
-                enableAndroidDocumentationLink.set(true)
-            }
+        dokkaSourceSets.configureEach {
+            it.enableAndroidDocumentationLink.set(true)
         }
     }
 }
@@ -43,19 +44,19 @@ fun Project.configurePublishing() {
 
     publishing {
         repositories {
-            maven {
-                name = "installLocally"
-                setUrl("${rootProject.layout.buildDirectory}/localMaven")
+            it.maven { maven ->
+                maven.name = "installLocally"
+                maven.setUrl("${rootProject.layout.buildDirectory}/localMaven")
             }
         }
     }
 }
 
-private fun Project.publishing(action: org.gradle.api.publish.PublishingExtension.() -> Unit) = extensions.configure<org.gradle.api.publish.PublishingExtension>(action)
+private fun Project.publishing(action: PublishingExtension.() -> Unit) = extensions.configure(PublishingExtension::class.java, action)
 
 private fun Project.mavenPublishing(action: MavenPublishBaseExtension.() -> Unit) {
     extensions.configure(MavenPublishBaseExtension::class.java, action)
 }
 
-private fun Project.dokka(action: org.jetbrains.dokka.gradle.DokkaExtension.() -> Unit) =
-    extensions.configure<org.jetbrains.dokka.gradle.DokkaExtension>(action)
+private fun Project.dokka(action: DokkaExtension.() -> Unit) =
+    extensions.configure(DokkaExtension::class.java, action)

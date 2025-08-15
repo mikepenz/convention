@@ -1,4 +1,3 @@
-import com.vanniktech.maven.publish.SonatypeHost
 import com.vanniktech.maven.publish.VersionCatalog
 
 plugins {
@@ -12,7 +11,6 @@ catalog {
 
 mavenPublishing {
     configure(VersionCatalog())
-
-    publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL, hasProperty("automaticRelease"))
+    publishToMavenCentral(hasProperty("automaticRelease"))
     signAllPublications()
 }

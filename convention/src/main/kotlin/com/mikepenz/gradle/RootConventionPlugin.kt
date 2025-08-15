@@ -2,12 +2,10 @@ package com.mikepenz.gradle
 
 import com.mikepenz.gradle.utils.readLocalProperties
 import com.mikepenz.gradle.utils.readPropertyOrElse
-import compat.patrouille.CompatPatrouilleExtension
 import kotlinx.validation.ApiValidationExtension
 import nl.littlerobots.vcu.plugin.versionCatalogUpdate
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.kotlin.dsl.configure
 
 class RootConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) = with(target) {
@@ -20,7 +18,7 @@ class RootConventionPlugin : Plugin<Project> {
             apiValidation {
                 @OptIn(kotlinx.validation.ExperimentalBCVApi::class)
                 klib {
-                    enabled = true
+                    it.enabled = true
                 }
 
                 ignoredProjects.addAll(allprojects.filter {
@@ -39,7 +37,7 @@ class RootConventionPlugin : Plugin<Project> {
                 sortByKey.set(false)
 
                 keep {
-                    keepUnusedVersions.set(true)
+                    it.keepUnusedVersions.set(true)
                 }
             }
         }
@@ -54,4 +52,4 @@ class RootConventionPlugin : Plugin<Project> {
     }
 }
 
-internal fun Project.apiValidation(action: ApiValidationExtension.() -> Unit) = extensions.configure<ApiValidationExtension>(action)
+internal fun Project.apiValidation(action: ApiValidationExtension.() -> Unit) = extensions.configure(ApiValidationExtension::class.java, action)

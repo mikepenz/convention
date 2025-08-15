@@ -7,10 +7,9 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.plugins.JavaPluginExtension
 import org.gradle.jvm.toolchain.JavaLanguageVersion
-import org.gradle.kotlin.dsl.configure
-import org.gradle.kotlin.dsl.withType
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JsModuleKind
+import org.jetbrains.kotlin.gradle.dsl.JsSourceMapEmbedMode
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.dsl.KotlinJvmCompilerOptions
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
@@ -29,8 +28,8 @@ class KotlinMultiplatformConventionPlugin : Plugin<Project> {
 
             val targetsEnabled = readPropertyOrElse("com.mikepenz.targets.enabled", "true", localProperties).toBoolean()
             if (targetsEnabled) {
-                extensions.configure<KotlinMultiplatformExtension> {
-                    configureMultiplatformTargets(project = target, localProperties = localProperties)
+                extensions.configure(KotlinMultiplatformExtension::class.java) {
+                    it.configureMultiplatformTargets(project = target, localProperties = localProperties)
                 }
             }
         }
@@ -90,7 +89,7 @@ fun KotlinMultiplatformExtension.configureMultiplatformTargets(
             compilerOptions {
                 moduleKind.set(JsModuleKind.MODULE_UMD)
                 sourceMap.set(true)
-                sourceMapEmbedSources.set(null)
+                sourceMapEmbedSources.set(null as? JsSourceMapEmbedMode?)
             }
         }
     }
@@ -135,8 +134,8 @@ fun Project.configureKotlin(
     val javaVersion = readPropertyOrElse("com.mikepenz.java.version", "17", localProperties)!!.toInt()
     val kotlinVersion = readPropertyOrElse("com.mikepenz.kotlin.version", "2.1.21", localProperties)!!
 
-    tasks.withType<KotlinCompilationTask<*>>().configureEach {
-        compilerOptions {
+    tasks.withType(KotlinCompilationTask::class.java).configureEach {
+        it.compilerOptions {
             allWarningsAsErrors.set(warningsAsErrors)
 
             if (!compatPatrouille) {
@@ -168,12 +167,12 @@ fun Project.configureJava(localProperties: Properties?) {
         java {
             toolchain {
                 val javaVersion = readPropertyOrElse("com.mikepenz.java.version", "17", localProperties)!!.toInt()
-                languageVersion.set(JavaLanguageVersion.of(javaVersion))
+                it.languageVersion.set(JavaLanguageVersion.of(javaVersion))
             }
         }
     }
 }
 
-private fun Project.java(action: JavaPluginExtension.() -> Unit) = extensions.configure<JavaPluginExtension>(action)
+private fun Project.java(action: JavaPluginExtension.() -> Unit) = extensions.configure(JavaPluginExtension::class.java, action)
 
-internal fun Project.compatPatrouille(action: CompatPatrouilleExtension.() -> Unit) = extensions.configure<CompatPatrouilleExtension>(action)
+internal fun Project.compatPatrouille(action: CompatPatrouilleExtension.() -> Unit) = extensions.configure(CompatPatrouilleExtension::class.java, action)

@@ -21,9 +21,9 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
                 buildFeatures.compose = compose
 
                 defaultConfig {
-                    versionCode = property("VERSION_CODE").toString().toInt()
-                    versionName = property("VERSION_NAME").toString()
-                    testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+                    it.versionCode = property("VERSION_CODE")?.toString()?.toInt()
+                    it.versionName = property("VERSION_NAME")?.toString()
+                    it.testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
                 }
 
                 val signing = project.readPropertyOrElse("com.mikepenz.android.signing.enabled", "false", localProperties).toBoolean()
@@ -35,40 +35,40 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
                     val keyPasswordProp = project.readPropertyOrElse("com.mikepenz.android.signing.keyPassword${variant}", "", localProperties)
 
                     signingConfigs {
-                        getByName("debug") {
-                            storeFile = file(storeFileProp)
-                            storePassword = storePasswordProp
-                            keyAlias = keyAliasProp
-                            keyPassword = keyPasswordProp
+                        it.getByName("debug") { config ->
+                            config.storeFile = file(storeFileProp)
+                            config.storePassword = storePasswordProp
+                            config.keyAlias = keyAliasProp
+                            config.keyPassword = keyPasswordProp
                         }
-                        create("release") {
-                            storeFile = file(storeFileProp)
-                            storePassword = storePasswordProp
-                            keyAlias = keyAliasProp
-                            keyPassword = keyPasswordProp
+                        it.create("release") { config ->
+                            config.storeFile = file(storeFileProp)
+                            config.storePassword = storePasswordProp
+                            config.keyAlias = keyAliasProp
+                            config.keyPassword = keyPasswordProp
                         }
                     }
                 }
 
                 buildTypes {
-                    getByName("debug") {
-                        signingConfig = signingConfigs.findByName("debug")
+                    it.getByName("debug") { buildType ->
+                        buildType.signingConfig = signingConfigs.findByName("debug")
                     }
 
-                    getByName("release") {
-                        signingConfig = signingConfigs.findByName("release")
-                        isMinifyEnabled = true
-                        isShrinkResources = true
-                        proguardFiles(
+                    it.getByName("release") { buildType ->
+                        buildType.signingConfig = signingConfigs.findByName("release")
+                        buildType.isMinifyEnabled = true
+                        buildType.isShrinkResources = true
+                        buildType.proguardFiles(
                             getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
                         )
                     }
                 }
 
                 packagingOptions {
-                    resources.excludes.add("META-INF/licenses/**")
-                    resources.excludes.add("META-INF/AL2.0")
-                    resources.excludes.add("META-INF/LGPL2.1")
+                    it.resources.excludes.add("META-INF/licenses/**")
+                    it.resources.excludes.add("META-INF/AL2.0")
+                    it.resources.excludes.add("META-INF/LGPL2.1")
                 }
             }
         }

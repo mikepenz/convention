@@ -1,15 +1,28 @@
 import com.vanniktech.maven.publish.GradlePlugin
 import com.vanniktech.maven.publish.JavadocJar
-import com.vanniktech.maven.publish.SonatypeHost
+import org.jetbrains.kotlin.gradle.dsl.KotlinVersion.KOTLIN_2_0
 
 plugins {
-    `kotlin-dsl`
+    id("org.jetbrains.kotlin.jvm").version(libs.versions.kotlin.get())
+    id("java-gradle-plugin")
     id("com.vanniktech.maven.publish")
 }
 
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+kotlin {
+    compilerOptions {
+        /**
+         * Yay! Latest tools with compat flags 🎉
+         * See also https://docs.gradle.org/current/userguide/compatibility.html
+         */
+        languageVersion.set(KOTLIN_2_0)
+        apiVersion.set(KOTLIN_2_0)
+        coreLibrariesVersion = "2.0.0"
     }
 }
 
@@ -33,6 +46,6 @@ mavenPublishing {
         )
     )
 
-    publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL, hasProperty("automaticRelease"))
+    publishToMavenCentral(hasProperty("automaticRelease"))
     signAllPublications()
 }

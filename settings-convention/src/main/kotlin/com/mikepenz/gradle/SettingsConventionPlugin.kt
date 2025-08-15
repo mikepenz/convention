@@ -8,8 +8,6 @@ import org.gradle.api.initialization.resolve.RepositoriesMode
 import org.gradle.api.logging.Logging
 import org.gradle.api.plugins.ExtraPropertiesExtension
 import org.gradle.authentication.http.HttpHeaderAuthentication
-import org.gradle.kotlin.dsl.create
-import org.gradle.kotlin.dsl.maven
 import org.gradle.util.GradleVersion
 
 class SettingsConventionPlugin : Plugin<Settings> {
@@ -36,35 +34,38 @@ class SettingsConventionPlugin : Plugin<Settings> {
         }.split(",").map { it.trim() }
 
 
-        val configure: MavenArtifactRepository.() -> Unit = {
+        val configure: MavenArtifactRepository.(providedUrl: String) -> Unit = { providedUrl ->
+            setUrl(providedUrl)
             credentials(HttpHeaderCredentials::class.java) {
-                name = "Authorization"
-                value = "Bearer $token"
+                it.name = "Authorization"
+                it.value = "Bearer $token"
             }
-            authentication { create<HttpHeaderAuthentication>("header") }
+            authentication { it.create("header", HttpHeaderAuthentication::class.java) }
             content {
                 if (!filters.isNullOrEmpty()) {
                     @Suppress("UnstableApiUsage")
-                    filters.forEach {
-                        includeGroupAndSubgroups(it)
+                    filters.forEach { filter ->
+                        it.includeGroupAndSubgroups(filter)
                     }
                 }
             }
         }
 
-        pluginManagement {
-            repositories {
-                repositories.onEach {
-                    maven("${baseUrl}/${it}", configure)
+        pluginManagement { plugin ->
+            plugin.repositories { repoHandler ->
+                repositories.onEach { repo ->
+                    repoHandler.maven { maven ->
+                        configure(maven, "${baseUrl}/${repo}")
+                    }
                 }
 
                 // common
-                mavenCentral()
-                google()
-                gradlePluginPortal()
+                repoHandler.mavenCentral()
+                repoHandler.google()
+                repoHandler.gradlePluginPortal()
 
                 // maven local
-                mavenLocal()
+                repoHandler.mavenLocal()
             }
         }
 
@@ -76,24 +77,26 @@ class SettingsConventionPlugin : Plugin<Settings> {
         dependencyResolutionManagement {
             // if project defines. use these
             @Suppress("UnstableApiUsage")
-            repositoriesMode.set(RepositoriesMode.PREFER_PROJECT)
+            it.repositoriesMode.set(RepositoriesMode.PREFER_PROJECT)
 
             @Suppress("UnstableApiUsage")
-            repositories {
-                repositories.onEach {
-                    maven("${baseUrl}/${it}", configure)
+            it.repositories { repoHandler ->
+                repositories.onEach { repo ->
+                    repoHandler.maven { maven ->
+                        configure(maven, "${baseUrl}/${repo}")
+                    }
                 }
 
                 // common
-                mavenCentral()
-                google()
-                gradlePluginPortal()
+                repoHandler.mavenCentral()
+                repoHandler.google()
+                repoHandler.gradlePluginPortal()
 
                 // maven local
-                mavenLocal()
+                repoHandler.mavenLocal()
             }
 
-            versionCatalogs {
+            it.versionCatalogs { vc ->
                 if (versionCatalog.isNotBlank() && versionCatalog != "false") {
                     val versionCatalogVersion = properties.getOrNull("settings.artifactory.versionCatalog.propKeys")
                         ?.let { keys -> keys.split(",").map { it.trim() } } ?: listOf("settings.artifactory.versionCatalogVersion")
@@ -101,8 +104,8 @@ class SettingsConventionPlugin : Plugin<Settings> {
                     val version = versionCatalogVersion.firstNotNullOfOrNull { key -> properties.getOrNull(key)?.takeIf { it.isNotBlank() } }
                         ?: throw IllegalArgumentException("This plugin requires a version catalog version to be set as 'settings.artifactory.versionCatalogVersion'. Or via via one of the keys as defined in 'settings.artifactory.versionCatalog.propKeys'.")
 
-                    create("baseLibs") {
-                        from("${versionCatalog}:${version}")
+                    vc.create("baseLibs") { vb ->
+                        vb.from("${versionCatalog}:${version}")
                     }
                 }
             }
@@ -113,15 +116,15 @@ class SettingsConventionPlugin : Plugin<Settings> {
     }
 
     private fun ExtraPropertiesExtension.getOrElse(key: String, default: () -> String): String {
-        return if (has(key)) get(key).toString() else default()
+        return if (has(key)) get(key)!!.toString() else default()
     }
 
     private fun ExtraPropertiesExtension.getOrNull(key: String): String? {
-        return if (has(key)) get(key).toString() else null
+        return if (has(key)) get(key)!!.toString() else null
     }
 
     private fun ExtraPropertiesExtension.getOrThrow(key: String, default: () -> Throwable): String {
-        return if (has(key)) get(key).toString() else throw default()
+        return if (has(key)) get(key)!!.toString() else throw default()
     }
 
     companion object {

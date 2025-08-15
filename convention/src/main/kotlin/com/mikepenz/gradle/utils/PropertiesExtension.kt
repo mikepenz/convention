@@ -1,7 +1,7 @@
 package com.mikepenz.gradle.utils
 
 import org.gradle.api.Project
-import java.util.*
+import java.util.Properties
 
 internal fun Project.readLocalProperties(): Properties? {
     return Properties().apply {

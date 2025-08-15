@@ -2,10 +2,8 @@ package com.mikepenz.gradle
 
 import com.mikepenz.gradle.utils.readLocalProperties
 import com.mikepenz.gradle.utils.readPropertyOrElse
-import compat.patrouille.CompatPatrouilleExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.kotlin.dsl.configure
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 
 class KotlinConventionPlugin : Plugin<Project> {
@@ -21,14 +19,14 @@ class KotlinConventionPlugin : Plugin<Project> {
             if (variant == "multiplatform") {
                 val targetsEnabled = readPropertyOrElse("com.mikepenz.targets.enabled", "true", localProperties).toBoolean()
                 if (targetsEnabled) {
-                    extensions.configure<KotlinMultiplatformExtension> {
-                        configureMultiplatformTargets(project = target, localProperties = localProperties)
+                    extensions.configure(KotlinMultiplatformExtension::class.java) {
+                        it.configureMultiplatformTargets(project = target, localProperties = localProperties)
                     }
                 }
             }
 
             val compatPatrouille = project.readPropertyOrElse("com.mikepenz.compatPatrouille.enabled", "true", localProperties).toString().toBoolean()
-            if(!compatPatrouille) configureJava(localProperties = localProperties) // Configure Java to use our chosen language level. Kotlin will automatically pick this up
+            if (!compatPatrouille) configureJava(localProperties = localProperties) // Configure Java to use our chosen language level. Kotlin will automatically pick this up
             configureKotlin(localProperties = localProperties)
         }
     }
