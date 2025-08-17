@@ -2,7 +2,6 @@ package com.mikepenz.gradle
 
 import com.mikepenz.gradle.utils.readLocalProperties
 import com.mikepenz.gradle.utils.readPropertyOrElse
-import compat.patrouille.CompatPatrouilleExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.plugins.JavaPluginExtension
@@ -175,4 +174,4 @@ fun Project.configureJava(localProperties: Properties?) {
 
 private fun Project.java(action: JavaPluginExtension.() -> Unit) = extensions.configure(JavaPluginExtension::class.java, action)
 
-internal fun Project.compatPatrouille(action: CompatPatrouilleExtension.() -> Unit) = extensions.configure(CompatPatrouilleExtension::class.java, action)
+internal fun Project.compatPatrouille(action: compat.patrouille.CompatPatrouilleExtension.() -> Unit) = extensions.configure(compat.patrouille.CompatPatrouilleExtension::class.java, action)

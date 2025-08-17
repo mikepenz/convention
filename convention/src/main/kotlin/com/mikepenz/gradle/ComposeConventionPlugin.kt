@@ -2,7 +2,6 @@ package com.mikepenz.gradle
 
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.jetbrains.kotlin.compose.compiler.gradle.ComposeCompilerGradlePluginExtension
 
 class ComposeConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) = with(target) {
@@ -19,5 +18,5 @@ internal fun Project.configureCompose() {
     }
 }
 
-private fun Project.composeCompiler(action: ComposeCompilerGradlePluginExtension.() -> Unit) =
-    extensions.configure(ComposeCompilerGradlePluginExtension::class.java, action)
+private fun Project.composeCompiler(action: org.jetbrains.kotlin.compose.compiler.gradle.ComposeCompilerGradlePluginExtension.() -> Unit) =
+    extensions.configure(org.jetbrains.kotlin.compose.compiler.gradle.ComposeCompilerGradlePluginExtension::class.java, action)

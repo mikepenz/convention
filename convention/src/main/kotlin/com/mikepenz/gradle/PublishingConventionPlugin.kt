@@ -3,11 +3,9 @@ package com.mikepenz.gradle
 import com.vanniktech.maven.publish.AndroidSingleVariantLibrary
 import com.vanniktech.maven.publish.JavadocJar
 import com.vanniktech.maven.publish.KotlinMultiplatform
-import com.vanniktech.maven.publish.MavenPublishBaseExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.publish.PublishingExtension
-import org.jetbrains.dokka.gradle.DokkaExtension
 
 class PublishingConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) = with(target) {
@@ -54,9 +52,9 @@ fun Project.configurePublishing() {
 
 private fun Project.publishing(action: PublishingExtension.() -> Unit) = extensions.configure(PublishingExtension::class.java, action)
 
-private fun Project.mavenPublishing(action: MavenPublishBaseExtension.() -> Unit) {
-    extensions.configure(MavenPublishBaseExtension::class.java, action)
+private fun Project.mavenPublishing(action: com.vanniktech.maven.publish.MavenPublishBaseExtension.() -> Unit) {
+    extensions.configure(com.vanniktech.maven.publish.MavenPublishBaseExtension::class.java, action)
 }
 
-private fun Project.dokka(action: DokkaExtension.() -> Unit) =
-    extensions.configure(DokkaExtension::class.java, action)
+private fun Project.dokka(action: org.jetbrains.dokka.gradle.DokkaExtension.() -> Unit) =
+    extensions.configure(org.jetbrains.dokka.gradle.DokkaExtension::class.java, action)

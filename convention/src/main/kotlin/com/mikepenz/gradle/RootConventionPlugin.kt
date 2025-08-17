@@ -2,7 +2,6 @@ package com.mikepenz.gradle
 
 import com.mikepenz.gradle.utils.readLocalProperties
 import com.mikepenz.gradle.utils.readPropertyOrElse
-import kotlinx.validation.ApiValidationExtension
 import nl.littlerobots.vcu.plugin.versionCatalogUpdate
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -52,4 +51,4 @@ class RootConventionPlugin : Plugin<Project> {
     }
 }
 
-internal fun Project.apiValidation(action: ApiValidationExtension.() -> Unit) = extensions.configure(ApiValidationExtension::class.java, action)
+internal fun Project.apiValidation(action: kotlinx.validation.ApiValidationExtension.() -> Unit) = extensions.configure(kotlinx.validation.ApiValidationExtension::class.java, action)
