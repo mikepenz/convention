@@ -13,19 +13,7 @@ class RootConventionPlugin : Plugin<Project> {
         val binaryCompatibilityValidatorEnabled = project.readPropertyOrElse(flagKey, "false", localProperties).toBoolean()
         if (binaryCompatibilityValidatorEnabled) {
             pluginManager.apply("org.jetbrains.kotlinx.binary-compatibility-validator")
-
-            apiValidation {
-                @OptIn(kotlinx.validation.ExperimentalBCVApi::class)
-                klib {
-                    it.enabled = true
-                }
-
-                ignoredProjects.addAll(allprojects.filter {
-                    val projectLocalProperties = it.readLocalProperties()
-                    val projBinaryCompatibilityValidatorEnabled = it.readPropertyOrElse(flagKey, "true", projectLocalProperties).toBoolean()
-                    if (projBinaryCompatibilityValidatorEnabled) it.name.contains("app") else true
-                }.map { it.name })
-            }
+            applyBinaryCompatibilityValidator(flagKey)
         }
 
         val versionCatalogUpdateEnabled = project.readPropertyOrElse("com.mikepenz.version-catalog-update.enabled", "false", localProperties).toBoolean()
@@ -50,5 +38,3 @@ class RootConventionPlugin : Plugin<Project> {
         }
     }
 }
-
-internal fun Project.apiValidation(action: kotlinx.validation.ApiValidationExtension.() -> Unit) = extensions.configure(kotlinx.validation.ApiValidationExtension::class.java, action)
