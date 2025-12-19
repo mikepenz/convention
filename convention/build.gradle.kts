@@ -35,7 +35,7 @@ dependencies {
     compileOnly(libs.dokka.gradlePlugin)
     compileOnly(libs.binaryCompatiblity.gradlePlugin)
     compileOnly(libs.versionCatalogUpdate.gradlePlugin)
-    compileOnly(libs.compatPatrouille.gradlePlugin)
+    compileOnly(libs.tapmoc.gradlePlugin)
 }
 
 gradlePlugin {

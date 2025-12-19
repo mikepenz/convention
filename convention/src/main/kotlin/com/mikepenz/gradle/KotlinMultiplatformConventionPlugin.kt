@@ -41,8 +41,9 @@ class KotlinMultiplatformConventionPlugin : Plugin<Project> {
             }
         }
 
-        val compatPatrouille = project.readPropertyOrElse("com.mikepenz.compatPatrouille.enabled", "true", localProperties).toString().toBoolean()
-        if (!compatPatrouille) configureJava(localProperties = localProperties)
+        val compatPatrouille = project.readPropertyOrElse("com.mikepenz.compatPatrouille.enabled", "true", localProperties).toString()
+        val tapmoc = project.readPropertyOrElse("com.mikepenz.tapmoc.enabled", compatPatrouille, localProperties).toString().toBoolean()
+        if (!tapmoc) configureJava(localProperties = localProperties)
         configureKotlin(localProperties = localProperties)
     }
 }
@@ -129,7 +130,8 @@ fun Project.configureKotlin(
     localProperties: Properties? = readLocalProperties(),
 ) {
     val warningsAsErrors = project.readPropertyOrElse("com.mikepenz.kotlin.warningsAsErrors.enabled", "true", localProperties).toString().toBoolean()
-    val compatPatrouille = project.readPropertyOrElse("com.mikepenz.compatPatrouille.enabled", "true", localProperties).toString().toBoolean()
+    val compatPatrouille = project.readPropertyOrElse("com.mikepenz.compatPatrouille.enabled", "true", localProperties).toString()
+    val tapmoc = project.readPropertyOrElse("com.mikepenz.tapmoc.enabled", compatPatrouille, localProperties).toString().toBoolean()
     val javaVersion = readPropertyOrElse("com.mikepenz.java.version", "17", localProperties)!!.toInt()
     val kotlinVersion = readPropertyOrElse("com.mikepenz.kotlin.version", "2.1.21", localProperties)!!
 
@@ -137,7 +139,7 @@ fun Project.configureKotlin(
         it.compilerOptions {
             allWarningsAsErrors.set(warningsAsErrors)
 
-            if (!compatPatrouille) {
+            if (!tapmoc) {
                 if (this is KotlinJvmCompilerOptions) {
                     jvmTarget.set(JvmTarget.fromTarget("$javaVersion"))
                 }
@@ -149,12 +151,12 @@ fun Project.configureKotlin(
     }
 
 
-    if (compatPatrouille) {
+    if (tapmoc) {
         with(pluginManager) {
             apply("com.gradleup.compat.patrouille")
         }
 
-        compatPatrouille {
+        tapmoc {
             java(javaVersion)
             kotlin(kotlinVersion)
         }
@@ -174,4 +176,4 @@ fun Project.configureJava(localProperties: Properties?) {
 
 private fun Project.java(action: JavaPluginExtension.() -> Unit) = extensions.configure(JavaPluginExtension::class.java, action)
 
-internal fun Project.compatPatrouille(action: compat.patrouille.CompatPatrouilleExtension.() -> Unit) = extensions.configure(compat.patrouille.CompatPatrouilleExtension::class.java, action)
+internal fun Project.tapmoc(action: tapmoc.TapmocExtension.() -> Unit) = extensions.configure(tapmoc.TapmocExtension::class.java, action)

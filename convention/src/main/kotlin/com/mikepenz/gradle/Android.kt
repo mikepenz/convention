@@ -18,8 +18,9 @@ fun Project.configureBaseAndroid(localProperties: Properties?) {
             it.targetSdk = libs.findVersion("targetSdk").get().requiredVersion.toInt()
         }
 
-        val compatPatrouille = project.readPropertyOrElse("com.mikepenz.compatPatrouille.enabled", "true", localProperties).toString().toBoolean()
-        if (!compatPatrouille) {
+        val compatPatrouille = project.readPropertyOrElse("com.mikepenz.compatPatrouille.enabled", "true", localProperties).toString()
+        val tapmoc = project.readPropertyOrElse("com.mikepenz.tapmoc.enabled", compatPatrouille, localProperties).toString().toBoolean()
+        if (!tapmoc) {
             val javaVersion = readPropertyOrElse("com.mikepenz.java.version", "17", localProperties)!!.toInt()
             compileOptions {
                 it.sourceCompatibility = JavaVersion.forClassVersion(javaVersion + 44)
