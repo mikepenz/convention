@@ -1,5 +1,7 @@
 package com.mikepenz.gradle
 
+import com.mikepenz.gradle.utils.readLocalProperties
+import com.mikepenz.gradle.utils.readPropertyOrElse
 import com.vanniktech.maven.publish.AndroidSingleVariantLibrary
 import com.vanniktech.maven.publish.JavadocJar
 import com.vanniktech.maven.publish.KotlinMultiplatform
@@ -27,6 +29,7 @@ fun Project.configureDocumentation() {
 
 
 fun Project.configurePublishing() {
+    val localProperties = readLocalProperties()
     mavenPublishing {
         if (pluginManager.hasPlugin("org.jetbrains.kotlin.multiplatform")) {
             configure(KotlinMultiplatform(JavadocJar.Dokka("dokkaGeneratePublicationHtml"), true, androidVariantsToPublish = listOf("release")))
@@ -36,7 +39,8 @@ fun Project.configurePublishing() {
             throw IllegalStateException("Currently only supported for multiplatform or kotlin android projects")
         }
 
-        publishToMavenCentral(true)
+        val targetsEnabled = readPropertyOrElse("com.mikepenz.publishing.autorelease", "true", localProperties).toBoolean()
+        publishToMavenCentral(automaticRelease = targetsEnabled)
         signAllPublications()
     }
 
