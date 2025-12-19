@@ -40,7 +40,8 @@ fun Project.configurePublishing() {
         }
 
         val targetsEnabled = readPropertyOrElse("com.mikepenz.publishing.autorelease", "true", localProperties).toBoolean()
-        publishToMavenCentral(automaticRelease = targetsEnabled)
+        val validateDeployment = readPropertyOrElse("com.mikepenz.publishing.validate", "false", localProperties).toBoolean()
+        publishToMavenCentral(automaticRelease = targetsEnabled, validateDeployment = validateDeployment)
         signAllPublications()
     }
 

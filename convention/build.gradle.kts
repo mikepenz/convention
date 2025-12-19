@@ -90,6 +90,6 @@ mavenPublishing {
         )
     )
 
-    publishToMavenCentral(hasProperty("automaticRelease"))
+    publishToMavenCentral(hasProperty("automaticRelease"), validateDeployment = hasProperty("validateDeployment"))
     signAllPublications()
 }
