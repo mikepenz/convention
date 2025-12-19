@@ -13,8 +13,9 @@ fun Project.configureBaseAndroid(localProperties: Properties?) {
     android {
         compileSdkVersion(libs.findVersion("compileSdk").get().requiredVersion.toInt())
 
+        val minSdk = project.readPropertyOrElse("com.mikepenz.android.minSdk", "${libs.findVersion("minSdk").get().requiredVersion.toInt()}", localProperties).toString().toInt()
         defaultConfig {
-            it.minSdk = libs.findVersion("minSdk").get().requiredVersion.toInt()
+            it.minSdk = minSdk
             it.targetSdk = libs.findVersion("targetSdk").get().requiredVersion.toInt()
         }
 
