@@ -1,24 +1,24 @@
 [versions]
 conventionPlugin = "0.5.3"
-agp = "8.13.0"
+agp = "8.13.2"
 compileSdk = "36"
 minSdk = "21"
 targetSdk = "36"
-compose = "1.9.4"
-compose-multiplatform = "1.9.2"
-kotlin = "2.2.21"
+compose = "1.10.0"
+compose-multiplatform = "1.10.0-rc02"
+kotlin = "2.3.0"
 kotlinxCoroutines = "1.10.2"
 kotlinxCollectionsImmutable = "0.4.0"
 dokka = "2.1.0"
-gradleMvnPublish = "0.34.0"
+gradleMvnPublish = "0.35.0"
 screenshot = "0.0.1-alpha11"
 lintGradle = "1.0.0-alpha05"
 aboutLibraries = "13.1.0"
 binaryCompatiblityValidator = "0.18.1"
 versionCatalogUpdate = "1.0.1"
-ktlint = "13.1.0"
-composeHotReload = "1.0.0-rc01"
-compatPatrouille = "0.1.0"
+ktlint = "14.0.1"
+composeHotReload = "1.0.0"
+tapmoc = "0.3.2"
 
 [libraries]
 androidx-compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose" }
@@ -47,7 +47,7 @@ mavenPublish-gradlePlugin = { module = "com.vanniktech.maven.publish:com.vannikt
 dokka-gradlePlugin = { module = "org.jetbrains.dokka:dokka-gradle-plugin", version.ref = "dokka" }
 binaryCompatiblity-gradlePlugin = { module = "org.jetbrains.kotlinx.binary-compatibility-validator:org.jetbrains.kotlinx.binary-compatibility-validator.gradle.plugin", version.ref = "binaryCompatiblityValidator" }
 versionCatalogUpdate-gradlePlugin = { module = "nl.littlerobots.version-catalog-update:nl.littlerobots.version-catalog-update.gradle.plugin", version.ref = "versionCatalogUpdate" }
-compatPatrouille-gradlePlugin = { module = "com.gradleup.compat.patrouille:com.gradleup.compat.patrouille.gradle.plugin", version.ref = "compatPatrouille" }
+tapmoc-gradlePlugin = { module = "com.gradleup.tapmoc:tapmoc-gradle-plugin", version.ref = "tapmoc" }
 
 [plugins]
 conventionPlugin = { id = "com.mikepenz.convention.root", version.ref = "conventionPlugin" }
@@ -68,7 +68,7 @@ screenshot = { id = "com.android.compose.screenshot", version.ref = "screenshot"
 binaryCompatiblityValidator = { id = "org.jetbrains.kotlinx.binary-compatibility-validator", version.ref = "binaryCompatiblityValidator" }
 versionCatalogUpdate = { id = "nl.littlerobots.version-catalog-update", version.ref = "versionCatalogUpdate" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
-compatPatrouille = { id = "com.gradleup.compat.patrouille", version.ref = "compatPatrouille" }
+tapmoc = { id = "com.gradleup.tapmoc", version.ref = "tapmoc" }
 
 [bundles]
 aboutlibs = [
