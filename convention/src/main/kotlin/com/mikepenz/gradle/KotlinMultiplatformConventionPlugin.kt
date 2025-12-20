@@ -1,5 +1,6 @@
 package com.mikepenz.gradle
 
+import com.android.build.api.dsl.androidLibrary
 import com.mikepenz.gradle.utils.readLocalProperties
 import com.mikepenz.gradle.utils.readPropertyOrElse
 import org.gradle.api.Plugin
@@ -64,10 +65,17 @@ fun KotlinMultiplatformExtension.configureMultiplatformTargets(
     applyDefaultHierarchyTemplate()
 
     // COMPOSE COMPATIBLE TARGETS START
-    if (androidEnabled && project.pluginManager.hasPlugin("com.android.library")) {
-        androidTarget {
-            publishLibraryVariants("release")
+    if (androidEnabled) {
+        if (project.pluginManager.hasPlugin("com.android.kotlin.multiplatform.library")) {
+            androidLibrary {
+                // publishLibraryVariants("release")
+            }
+        } else if (project.pluginManager.hasPlugin("com.android.library")) {
+            androidTarget {
+                publishLibraryVariants("release")
+            }
         }
+
     }
 
     if (jvmEnabled) {
