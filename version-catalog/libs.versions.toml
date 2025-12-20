@@ -1,5 +1,5 @@
 [versions]
-conventionPlugin = "0.6.3"
+conventionPlugin = "0.6.4"
 agp = "8.13.2"
 compileSdk = "36"
 minSdk = "21"
@@ -19,6 +19,7 @@ versionCatalogUpdate = "1.0.1"
 ktlint = "14.0.1"
 composeHotReload = "1.0.0"
 tapmoc = "0.3.2"
+stabilityAnalyzer = "0.6.5"
 
 [libraries]
 androidx-compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose" }
@@ -48,11 +49,13 @@ dokka-gradlePlugin = { module = "org.jetbrains.dokka:dokka-gradle-plugin", versi
 binaryCompatiblity-gradlePlugin = { module = "org.jetbrains.kotlinx.binary-compatibility-validator:org.jetbrains.kotlinx.binary-compatibility-validator.gradle.plugin", version.ref = "binaryCompatiblityValidator" }
 versionCatalogUpdate-gradlePlugin = { module = "nl.littlerobots.version-catalog-update:nl.littlerobots.version-catalog-update.gradle.plugin", version.ref = "versionCatalogUpdate" }
 tapmoc-gradlePlugin = { module = "com.gradleup.tapmoc:tapmoc-gradle-plugin", version.ref = "tapmoc" }
+stabilityAnalyzer-gradlePlugin = { module = "com.github.skydoves.compose.stability.analyzer:com.github.skydoves.compose.stability.analyzer.gradle.plugin", version.ref = "stabilityAnalyzer" }
 
 [plugins]
 conventionPlugin = { id = "com.mikepenz.convention.root", version.ref = "conventionPlugin" }
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
+androidKmpLibrary = { id = "com.android.kotlin.multiplatform.library", version.ref = "agp" }
 androidTest = { id = "com.android.test", version.ref = "agp" }
 androidLint = { id = "com.android.lint", version.ref = "agp" }
 composeMultiplatform = { id = "org.jetbrains.compose", version.ref = "compose-multiplatform" }
@@ -69,6 +72,7 @@ binaryCompatiblityValidator = { id = "org.jetbrains.kotlinx.binary-compatibility
 versionCatalogUpdate = { id = "nl.littlerobots.version-catalog-update", version.ref = "versionCatalogUpdate" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
 tapmoc = { id = "com.gradleup.tapmoc", version.ref = "tapmoc" }
+stabilityAnalyzer = { id = "com.github.skydoves.compose.stability.analyzer", version.ref = "stabilityAnalyzer" }
 
 [bundles]
 aboutlibs = [
