@@ -33,7 +33,9 @@ fun Project.configurePublishing() {
     mavenPublishing {
         if (pluginManager.hasPlugin("org.jetbrains.kotlin.multiplatform")) {
             configure(KotlinMultiplatform(JavadocJar.Dokka("dokkaGeneratePublicationHtml"), true, androidVariantsToPublish = listOf("release")))
-        } else if (pluginManager.hasPlugin("org.jetbrains.kotlin.android")) {
+        } else if (pluginManager.hasPlugin("com.android.kotlin.multiplatform.library")) {
+            configure(KotlinMultiplatform(JavadocJar.Dokka("dokkaGeneratePublicationHtml"), true))
+        } else if (pluginManager.hasPlugin("org.jetbrains.kotlin.android") || pluginManager.hasPlugin("com.android.library")) {
             configure(AndroidSingleVariantLibrary())
         } else {
             throw IllegalStateException("Currently only supported for multiplatform or kotlin android projects")
