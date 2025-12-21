@@ -16,7 +16,6 @@ class AndroidKmpLibraryConventionPlugin : Plugin<Project> {
 
             val localProperties = readLocalProperties()
             androidKmpLibrary {
-
                 compileSdk = libs.findVersion("compileSdk").get().requiredVersion.toInt()
                 val minSdk =
                     project.readPropertyOrElse("com.mikepenz.android.minSdk", "${libs.findVersion("minSdk").get().requiredVersion.toInt()}", localProperties).toString().toInt()

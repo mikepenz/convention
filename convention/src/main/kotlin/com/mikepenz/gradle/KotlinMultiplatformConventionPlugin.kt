@@ -1,6 +1,5 @@
 package com.mikepenz.gradle
 
-import com.android.build.api.dsl.androidLibrary
 import com.mikepenz.gradle.utils.readLocalProperties
 import com.mikepenz.gradle.utils.readPropertyOrElse
 import org.gradle.api.Plugin
@@ -67,8 +66,8 @@ fun KotlinMultiplatformExtension.configureMultiplatformTargets(
     // COMPOSE COMPATIBLE TARGETS START
     if (androidEnabled) {
         if (project.pluginManager.hasPlugin("com.android.kotlin.multiplatform.library")) {
-            androidLibrary {
-                // publishLibraryVariants("release")
+            androidTarget {
+                publishLibraryVariants("release")
             }
         } else if (project.pluginManager.hasPlugin("com.android.library")) {
             androidTarget {
@@ -161,7 +160,7 @@ fun Project.configureKotlin(
 
     if (tapmoc) {
         with(pluginManager) {
-            apply("com.gradleup.compat.patrouille")
+            apply("com.gradleup.tapmoc")
         }
 
         tapmoc {

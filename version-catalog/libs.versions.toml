@@ -1,6 +1,6 @@
 [versions]
 conventionPlugin = "0.6.4"
-agp = "8.13.2"
+agp = "9.0.0-rc01"
 compileSdk = "36"
 minSdk = "21"
 targetSdk = "36"
