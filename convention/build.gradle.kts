@@ -84,6 +84,13 @@ gradlePlugin {
             id = "com.mikepenz.convention.publishing"
             implementationClass = "com.mikepenz.gradle.PublishingConventionPlugin"
         }
+
+        create("composablePreviewPaparazziPlugin") {
+            id = "com.mikepenz.convention.composable-preview-scanner.paparazzi-plugin"
+            implementationClass = "com.mikepenz.gradle.previewscanner.ComposablePreviewPaparazziPlugin"
+            displayName = "Composable Preview Paparazzi Generator"
+            description = "A Gradle plugin that generates and executes Paparazzi test files for screenshot testing Composable Previews. https://github.com/sergio-sastre/ComposablePreviewScanner/"
+        }
     }
 }
 

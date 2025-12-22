@@ -20,6 +20,9 @@ ktlint = "14.0.1"
 composeHotReload = "1.0.0"
 tapmoc = "0.3.2"
 stabilityAnalyzer = "0.6.5"
+paparazzi = "2.0.0-alpha02"
+composablePreviewScanner = "0.8.1"
+junit = "4.13.2"
 
 [libraries]
 androidx-compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose" }
@@ -36,6 +39,8 @@ aboutlibraries-core = { module = "com.mikepenz:aboutlibraries-core", version.ref
 aboutlibraries-compose-core = { module = "com.mikepenz:aboutlibraries-compose-core", version.ref = "aboutLibraries" }
 aboutlibraries-compose-m2 = { module = "com.mikepenz:aboutlibraries-compose-m2", version.ref = "aboutLibraries" }
 aboutlibraries-compose-m3 = { module = "com.mikepenz:aboutlibraries-compose-m3", version.ref = "aboutLibraries" }
+composablePreviewScanner = { module = "io.github.sergio-sastre.ComposablePreviewScanner:android", version.ref = "composablePreviewScanner" }
+junit = { module = "junit:junit", version.ref = "junit" }
 # Build logic dependencies
 android-gradlePlugin = { module = "com.android.tools.build:gradle", version.ref = "agp" }
 android-lint-gradlePlugin = { module = "com.android.lint:com.android.lint.gradle.plugin", version.ref = "agp" }
@@ -73,6 +78,7 @@ versionCatalogUpdate = { id = "nl.littlerobots.version-catalog-update", version.
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
 tapmoc = { id = "com.gradleup.tapmoc", version.ref = "tapmoc" }
 stabilityAnalyzer = { id = "com.github.skydoves.compose.stability.analyzer", version.ref = "stabilityAnalyzer" }
+paparazzi = { id = "app.cash.paparazzi", version.ref = "paparazzi" }
 
 [bundles]
 aboutlibs = [
