@@ -65,11 +65,6 @@ gradlePlugin {
             implementationClass = "com.mikepenz.gradle.AndroidLibraryConventionPlugin"
         }
 
-        register("androidKmpLibrary") {
-            id = "com.mikepenz.convention.android-kmp-library"
-            implementationClass = "com.mikepenz.gradle.AndroidKmpLibraryConventionPlugin"
-        }
-
         register("androidTest") {
             id = "com.mikepenz.convention.android-test"
             implementationClass = "com.mikepenz.gradle.AndroidTestConventionPlugin"

@@ -1,5 +1,6 @@
 package com.mikepenz.gradle
 
+import com.mikepenz.gradle.utils.libs
 import com.mikepenz.gradle.utils.readLocalProperties
 import com.mikepenz.gradle.utils.readPropertyOrElse
 import org.gradle.api.Plugin
@@ -23,6 +24,13 @@ class KotlinMultiplatformConventionPlugin : Plugin<Project> {
         if (multiplatformEnabled) {
             with(pluginManager) {
                 apply("org.jetbrains.kotlin.multiplatform")
+            }
+
+            val androidEnabled = project.readPropertyOrElse("com.mikepenz.android.enabled", "true", localProperties).toBoolean()
+            if (androidEnabled) {
+                with(pluginManager) {
+                    apply("com.android.kotlin.multiplatform.library")
+                }
             }
 
             val targetsEnabled = readPropertyOrElse("com.mikepenz.targets.enabled", "true", localProperties).toBoolean()
@@ -66,8 +74,10 @@ fun KotlinMultiplatformExtension.configureMultiplatformTargets(
     // COMPOSE COMPATIBLE TARGETS START
     if (androidEnabled) {
         if (project.pluginManager.hasPlugin("com.android.kotlin.multiplatform.library")) {
-            androidTarget {
-                publishLibraryVariants("release")
+            android {
+                this.compileSdk = project.libs.findVersion("compileSdk").get().requiredVersion.toInt()
+                val minSdk = project.readPropertyOrElse("com.mikepenz.android.minSdk", project.libs.findVersion("minSdk").get().requiredVersion, localProperties)?.toInt()
+                this.minSdk = minSdk
             }
         } else if (project.pluginManager.hasPlugin("com.android.library")) {
             androidTarget {
@@ -184,3 +194,6 @@ fun Project.configureJava(localProperties: Properties?) {
 private fun Project.java(action: JavaPluginExtension.() -> Unit) = extensions.configure(JavaPluginExtension::class.java, action)
 
 internal fun Project.tapmoc(action: tapmoc.TapmocExtension.() -> Unit) = extensions.configure(tapmoc.TapmocExtension::class.java, action)
+
+internal fun org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension.android(action: com.android.build.api.dsl.KotlinMultiplatformAndroidLibraryTarget.() -> Unit) =
+    this.extensions.configure(com.android.build.api.dsl.KotlinMultiplatformAndroidLibraryTarget::class.java, action)
