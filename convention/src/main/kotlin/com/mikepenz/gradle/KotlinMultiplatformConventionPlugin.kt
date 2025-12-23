@@ -26,15 +26,15 @@ class KotlinMultiplatformConventionPlugin : Plugin<Project> {
                 apply("org.jetbrains.kotlin.multiplatform")
             }
 
-            val androidEnabled = project.readPropertyOrElse("com.mikepenz.android.enabled", "true", localProperties).toBoolean()
-            if (androidEnabled) {
-                with(pluginManager) {
-                    apply("com.android.kotlin.multiplatform.library")
-                }
-            }
-
             val targetsEnabled = readPropertyOrElse("com.mikepenz.targets.enabled", "true", localProperties).toBoolean()
             if (targetsEnabled) {
+                val androidEnabled = project.readPropertyOrElse("com.mikepenz.android.enabled", "true", localProperties).toBoolean()
+                if (androidEnabled) {
+                    with(pluginManager) {
+                        apply("com.android.kotlin.multiplatform.library")
+                    }
+                }
+
                 extensions.configure(KotlinMultiplatformExtension::class.java) {
                     it.configureMultiplatformTargets(project = target, localProperties = localProperties)
                 }
