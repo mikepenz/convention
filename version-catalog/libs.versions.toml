@@ -5,6 +5,7 @@ compileSdk = "36"
 minSdk = "21"
 targetSdk = "36"
 compose = "1.10.0"
+compose-wear = "1.5.6"
 compose-multiplatform = "1.10.0-rc02"
 kotlin = "2.3.0"
 kotlinxCoroutines = "1.10.2"
@@ -32,7 +33,7 @@ androidx-compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling
 androidx-compose-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "compose" }
 androidx-compose-material = { module = "androidx.compose.material:material", version.ref = "compose" }
 androidx-compose-material3 = { module = "androidx.compose.material:material3", version.ref = "compose" }
-androidx-compose-wear-material3 = { module = "androidx.wear.compose:compose-material3", version.ref = "compose" }
+androidx-compose-wear-material3 = { module = "androidx.wear.compose:compose-material3", version.ref = "compose-wear" }
 jetbrains-compose-runtime = { module = "org.jetbrains.compose.runtime:runtime", version.ref = "compose-multiplatform" }
 jetbrains-compose-ui = { module = "org.jetbrains.compose.ui:ui", version.ref = "compose-multiplatform" }
 jetbrains-compose-ui-tooling = { module = "org.jetbrains.compose.ui:ui-tooling", version.ref = "compose-multiplatform" }
