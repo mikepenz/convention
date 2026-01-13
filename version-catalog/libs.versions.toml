@@ -1,12 +1,12 @@
 [versions]
 conventionPlugin = "0.9.0"
-agp = "9.0.0-rc01"
+agp = "9.0.0-rc03"
 compileSdk = "36"
 minSdk = "21"
 targetSdk = "36"
 compose = "1.10.0"
 compose-wear = "1.5.6"
-compose-multiplatform = "1.10.0-rc02"
+compose-multiplatform = "1.10.0"
 compose-material3 = "1.4.0"
 compose-material3-multiplatform = "1.9.0"
 kotlin = "2.3.0"
@@ -21,8 +21,8 @@ binaryCompatiblityValidator = "0.18.1"
 versionCatalogUpdate = "1.0.1"
 ktlint = "14.0.1"
 composeHotReload = "1.0.0"
-tapmoc = "0.3.2"
-stabilityAnalyzer = "0.6.5"
+tapmoc = "0.4.0"
+stabilityAnalyzer = "0.6.6"
 paparazzi = "2.0.0-alpha02"
 composablePreviewScanner = "0.8.1"
 junit = "4.13.2"
@@ -87,7 +87,7 @@ kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref =
 kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
-aboutLibraries = "com.mikepenz.aboutlibraries.plugin:13.1.0"
+aboutLibraries = "com.mikepenz.aboutlibraries.plugin:13.2.1"
 mavenPublish = { id = "com.vanniktech.maven.publish", version.ref = "gradleMvnPublish" }
 screenshot = { id = "com.android.compose.screenshot", version.ref = "screenshot" }
 binaryCompatiblityValidator = { id = "org.jetbrains.kotlinx.binary-compatibility-validator", version.ref = "binaryCompatiblityValidator" }
