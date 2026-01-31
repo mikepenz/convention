@@ -56,18 +56,20 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
                         val keyAliasProp = project.readPropertyOrElse("com.mikepenz.android.signing.keyAlias${variant}", "", localProperties)
                         val keyPasswordProp = project.readPropertyOrElse("com.mikepenz.android.signing.keyPassword${variant}", "", localProperties)
 
-                        it.signingConfigs {
-                            getByName("debug") { config ->
-                                config.storeFile = file(storeFileProp)
-                                config.storePassword = storePasswordProp
-                                config.keyAlias = keyAliasProp
-                                config.keyPassword = keyPasswordProp
-                            }
-                            create("release") { config ->
-                                config.storeFile = file(storeFileProp)
-                                config.storePassword = storePasswordProp
-                                config.keyAlias = keyAliasProp
-                                config.keyPassword = keyPasswordProp
+                        if (storeFileProp.isNotEmpty()) {
+                            it.signingConfigs {
+                                getByName("debug") { config ->
+                                    config.storeFile = file(storeFileProp)
+                                    config.storePassword = storePasswordProp
+                                    config.keyAlias = keyAliasProp
+                                    config.keyPassword = keyPasswordProp
+                                }
+                                create("release") { config ->
+                                    config.storeFile = file(storeFileProp)
+                                    config.storePassword = storePasswordProp
+                                    config.keyAlias = keyAliasProp
+                                    config.keyPassword = keyPasswordProp
+                                }
                             }
                         }
                     }
