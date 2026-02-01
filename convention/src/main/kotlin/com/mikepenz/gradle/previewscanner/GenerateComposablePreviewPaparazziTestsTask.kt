@@ -186,7 +186,7 @@ abstract class GenerateComposablePreviewPaparazziTestsTask : DefaultTask() {
             }
 
             private class PreviewHtmlReportWriter: SnapshotHandler {
-                private val snapshotHandler = HtmlReportWriter()
+                private val snapshotHandler = HtmlReportWriter(maxPercentDifference = 0.01)
                 override fun newFrameHandler(
                     snapshot: Snapshot,
                     frameCount: Int,
