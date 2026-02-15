@@ -21,6 +21,9 @@ pluginManagement {
         id("nl.littlerobots.version-catalog-update") version "1.0.1"
     }
 }
+plugins {
+    id("org.gradle.toolchains.foojay-resolver-convention") version "1.0.0"
+}
 
 include(":convention")
 include(":settings-convention")
