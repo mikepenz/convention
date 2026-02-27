@@ -25,7 +25,7 @@ abstract class VersionTask : Sync() {
                     package ${packageString.get().trim()}
                     
                     const val VERSION = "${version.get()}"
-                    const val IDE_BUILD = "${ideBuild.convention(false).get()}"
+                    const val IDE_BUILD = ${ideBuild.convention(false).get()}
                 """.trimIndent().trim()
             )
         ) {
