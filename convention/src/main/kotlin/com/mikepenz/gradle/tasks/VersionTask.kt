@@ -14,6 +14,9 @@ abstract class VersionTask : Sync() {
     @get:Input
     abstract val version: Property<String>
 
+    @get:Input
+    abstract val ideBuild: Property<Boolean>
+
     fun store(resourceHandler: ResourceHandler) {
         from(
             resourceHandler.text.fromString(
@@ -22,6 +25,7 @@ abstract class VersionTask : Sync() {
                     package ${packageString.get().trim()}
                     
                     const val VERSION = "${version.get()}"
+                    const val IDE_BUILD = "${ideBuild.convention(false).get()}"
                 """.trimIndent().trim()
             )
         ) {
