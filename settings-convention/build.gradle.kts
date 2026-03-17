@@ -1,5 +1,7 @@
+import com.vanniktech.maven.publish.DeploymentValidation
 import com.vanniktech.maven.publish.GradlePlugin
 import com.vanniktech.maven.publish.JavadocJar
+import com.vanniktech.maven.publish.SourcesJar
 import org.jetbrains.kotlin.gradle.dsl.KotlinVersion.KOTLIN_2_0
 
 plugins {
@@ -42,10 +44,13 @@ mavenPublishing {
     configure(
         GradlePlugin(
             javadocJar = JavadocJar.Javadoc(),
-            sourcesJar = true,
+            sourcesJar = SourcesJar.Sources(),
         )
     )
 
-    publishToMavenCentral(hasProperty("automaticRelease"), validateDeployment = hasProperty("validateDeployment"))
+    publishToMavenCentral(
+        automaticRelease = hasProperty("automaticRelease"),
+        validateDeployment = if (hasProperty("validateDeployment")) DeploymentValidation.VALIDATED else DeploymentValidation.NONE
+    )
     signAllPublications()
 }

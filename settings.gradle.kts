@@ -17,8 +17,8 @@ dependencyResolutionManagement {
 
 pluginManagement {
     plugins {
-        id("com.vanniktech.maven.publish") version "0.35.0" apply false
-        id("nl.littlerobots.version-catalog-update") version "1.0.1"
+        id("com.vanniktech.maven.publish") version "0.36.0" apply false
+        id("nl.littlerobots.version-catalog-update") version "1.1.0"
     }
 }
 plugins {
