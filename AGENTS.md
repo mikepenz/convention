@@ -68,3 +68,11 @@ After a version bump, publish both artifacts to Maven Local to verify the build:
 ```bash
 ./gradlew version-catalog:publishToMavenLocal && ./gradlew convention:publishToMavenLocal
 ```
+
+### Release Publication
+
+To publish a release to Maven Central:
+
+```bash
+./gradlew version-catalog:publishAllPublicationsToMavenCentralRepository -PautomaticRelease=true && ./gradlew convention:publishAllPublicationsToMavenCentralRepository -PautomaticRelease=true
+```
