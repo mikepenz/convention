@@ -23,7 +23,7 @@ ktlint = "14.2.0"
 composeHotReload = "1.0.0"
 tapmoc = "0.4.1"
 stabilityAnalyzer = "0.7.2"
-paparazzi = "2.0.0-alpha04"
+paparazzi = "0.0.1-a01"
 composablePreviewScanner = "0.8.2"
 junit = "4.13.2"
 
@@ -95,7 +95,7 @@ versionCatalogUpdate = { id = "nl.littlerobots.version-catalog-update", version.
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
 tapmoc = { id = "com.gradleup.tapmoc", version.ref = "tapmoc" }
 stabilityAnalyzer = { id = "com.github.skydoves.compose.stability.analyzer", version.ref = "stabilityAnalyzer" }
-paparazzi = { id = "app.cash.paparazzi", version.ref = "paparazzi" }
+paparazzi = { id = "dev.mikepenz.paparazzi", version.ref = "paparazzi" }
 
 [bundles]
 aboutlibs = [
