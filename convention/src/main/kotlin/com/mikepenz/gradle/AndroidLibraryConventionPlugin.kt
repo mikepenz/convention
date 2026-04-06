@@ -47,6 +47,10 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
                             )
                         }
                     })
+
+                    lint {
+                        sarifReport = true
+                    }
                 }
             }
 
