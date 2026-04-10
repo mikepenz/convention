@@ -1,3 +1,4 @@
+import com.vanniktech.maven.publish.DeploymentValidation
 import com.vanniktech.maven.publish.VersionCatalog
 
 plugins {
@@ -11,6 +12,6 @@ catalog {
 
 mavenPublishing {
     configure(VersionCatalog())
-    publishToMavenCentral(hasProperty("automaticRelease"), validateDeployment = hasProperty("validateDeployment"))
+    publishToMavenCentral(hasProperty("automaticRelease"), validateDeployment = if (hasProperty("validateDeployment")) DeploymentValidation.VALIDATED else DeploymentValidation.NONE)
     signAllPublications()
 }

@@ -1,5 +1,7 @@
+import com.vanniktech.maven.publish.DeploymentValidation
 import com.vanniktech.maven.publish.GradlePlugin
 import com.vanniktech.maven.publish.JavadocJar
+import com.vanniktech.maven.publish.SourcesJar
 import org.jetbrains.kotlin.gradle.dsl.KotlinVersion.KOTLIN_2_0
 
 plugins {
@@ -84,7 +86,8 @@ gradlePlugin {
             id = "com.mikepenz.convention.composable-preview-scanner.paparazzi-plugin"
             implementationClass = "com.mikepenz.gradle.previewscanner.ComposablePreviewPaparazziPlugin"
             displayName = "Composable Preview Paparazzi Generator"
-            description = "A Gradle plugin that generates and executes Paparazzi test files for screenshot testing Composable Previews. https://github.com/sergio-sastre/ComposablePreviewScanner/"
+            description =
+                "A Gradle plugin that generates and executes Paparazzi test files for screenshot testing Composable Previews. https://github.com/sergio-sastre/ComposablePreviewScanner/"
         }
     }
 }
@@ -93,10 +96,13 @@ mavenPublishing {
     configure(
         GradlePlugin(
             javadocJar = JavadocJar.Javadoc(),
-            sourcesJar = true,
+            sourcesJar = SourcesJar.Sources(),
         )
     )
 
-    publishToMavenCentral(hasProperty("automaticRelease"), validateDeployment = hasProperty("validateDeployment"))
+    publishToMavenCentral(
+        hasProperty("automaticRelease"),
+        validateDeployment = if (hasProperty("validateDeployment")) DeploymentValidation.VALIDATED else DeploymentValidation.NONE
+    )
     signAllPublications()
 }

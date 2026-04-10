@@ -3,8 +3,10 @@ package com.mikepenz.gradle
 import com.mikepenz.gradle.utils.readLocalProperties
 import com.mikepenz.gradle.utils.readPropertyOrElse
 import com.vanniktech.maven.publish.AndroidSingleVariantLibrary
+import com.vanniktech.maven.publish.DeploymentValidation
 import com.vanniktech.maven.publish.JavadocJar
 import com.vanniktech.maven.publish.KotlinMultiplatform
+import com.vanniktech.maven.publish.SourcesJar
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.publish.PublishingExtension
@@ -32,9 +34,9 @@ fun Project.configurePublishing() {
     val localProperties = readLocalProperties()
     mavenPublishing {
         if (pluginManager.hasPlugin("org.jetbrains.kotlin.multiplatform")) {
-            configure(KotlinMultiplatform(JavadocJar.Dokka("dokkaGeneratePublicationHtml"), true, androidVariantsToPublish = listOf("release")))
+            configure(KotlinMultiplatform(JavadocJar.Dokka("dokkaGeneratePublicationHtml"), sourcesJar = SourcesJar.Sources(), androidVariantsToPublish = listOf("release")))
         } else if (pluginManager.hasPlugin("com.android.kotlin.multiplatform.library")) {
-            configure(KotlinMultiplatform(JavadocJar.Dokka("dokkaGeneratePublicationHtml"), true))
+            configure(KotlinMultiplatform(JavadocJar.Dokka("dokkaGeneratePublicationHtml"), sourcesJar = SourcesJar.Sources()))
         } else if (pluginManager.hasPlugin("org.jetbrains.kotlin.android") || pluginManager.hasPlugin("com.android.library")) {
             configure(AndroidSingleVariantLibrary())
         } else {
@@ -43,7 +45,7 @@ fun Project.configurePublishing() {
 
         val targetsEnabled = readPropertyOrElse("com.mikepenz.publishing.autorelease", "true", localProperties).toBoolean()
         val validateDeployment = readPropertyOrElse("com.mikepenz.publishing.validate", "false", localProperties).toBoolean()
-        publishToMavenCentral(automaticRelease = targetsEnabled, validateDeployment = validateDeployment)
+        publishToMavenCentral(automaticRelease = targetsEnabled, validateDeployment = if (validateDeployment) DeploymentValidation.VALIDATED else DeploymentValidation.NONE)
         signAllPublications()
     }
 
