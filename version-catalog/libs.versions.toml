@@ -1,5 +1,5 @@
 [versions]
-conventionPlugin = "0.10.1"
+conventionPlugin = "0.10.2"
 agp = "9.1.0"
 compileSdk = "36"
 minSdk = "21"
