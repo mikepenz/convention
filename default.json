@@ -35,14 +35,19 @@
     {
       "matchManagers": [
         "maven",
-        "gradle",
-        "gradle-wrapper"
+        "gradle"
       ],
       "registryUrls": [
         "https://repo.maven.apache.org/maven2",
         "https://maven.google.com/",
         "https://plugins.gradle.org/m2/"
       ]
+    },
+    {
+      "matchManagers": [
+        "gradle-wrapper"
+      ],
+      "groupName": "Gradle Wrapper"
     },
     {
       "matchDepTypes": [
