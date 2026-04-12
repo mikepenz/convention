@@ -1,0 +1,91 @@
+{
+  "$schema": "https://docs.renovateapp.com/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+    ":semanticCommits",
+    "helpers:pinGitHubActionDigests",
+    "group:recommended"
+  ],
+  "pinDigests": true,
+  "lockFileMaintenance": {
+    "enabled": true,
+    "automerge": true,
+    "schedule": [
+      "before 6am on Monday"
+    ]
+  },
+  "osvVulnerabilityAlerts": true,
+  "vulnerabilityAlerts": {
+    "labels": [
+      "dependencies",
+      "security"
+    ],
+    "automerge": false,
+    "minimumReleaseAge": "0 days"
+  },
+  "labels": [
+    "dependencies"
+  ],
+  "minimumReleaseAge": "7 days",
+  "schedule": [
+    "before 6am on Monday"
+  ],
+  "timezone": "Europe/Berlin",
+  "packageRules": [
+    {
+      "matchDepTypes": [
+        "devDependencies"
+      ],
+      "matchUpdateTypes": [
+        "patch",
+        "minor"
+      ],
+      "automerge": true,
+      "platformAutomerge": false,
+      "groupName": "Node devDependency non-major updates",
+      "labels": [
+        "dependencies",
+        "javascript"
+      ]
+    },
+    {
+      "matchPackagePatterns": [
+        "^mikepenz/"
+      ],
+      "groupName": "Mike Penz Internal Projects",
+      "automerge": true,
+      "platformAutomerge": true,
+      "schedule": [
+        "at any time"
+      ]
+    },
+    {
+      "matchPackagePatterns": [
+        "^org.jetbrains.kotlin",
+        "^com.android.tools.build",
+        "^androidx.compose"
+      ],
+      "groupName": "Kotlin & Android Core",
+      "labels": [
+        "kotlin",
+        "android"
+      ]
+    },
+    {
+      "matchManagers": [
+        "github-actions"
+      ],
+      "matchUpdateTypes": [
+        "digest",
+        "patch",
+        "minor"
+      ],
+      "automerge": true,
+      "groupName": "GitHub Actions updates",
+      "labels": [
+        "dependencies",
+        "github-actions"
+      ]
+    }
+  ]
+}
