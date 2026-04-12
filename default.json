@@ -33,6 +33,18 @@
   "timezone": "Europe/Berlin",
   "packageRules": [
     {
+      "matchManagers": [
+        "maven",
+        "gradle",
+        "gradle-wrapper"
+      ],
+      "registryUrls": [
+        "https://repo.maven.apache.org/maven2",
+        "https://maven.google.com/",
+        "https://plugins.gradle.org/m2/"
+      ]
+    },
+    {
       "matchDepTypes": [
         "devDependencies"
       ],
@@ -87,5 +99,19 @@
         "github-actions"
       ]
     }
-  ]
+  ],
+  "gradle": {
+    "enabled": true,
+    "fileMatch": [
+      "(^|/)gradle/libs\\.versions\\.toml$",
+      "(^|/)build\\.gradle\\.kts$",
+      "(^|/)build\\.gradle$"
+    ]
+  },
+  "gradle-wrapper": {
+    "enabled": true,
+    "fileMatch": [
+      "(^|/)gradle/wrapper/gradle-wrapper\\.properties$"
+    ]
+  }
 }
