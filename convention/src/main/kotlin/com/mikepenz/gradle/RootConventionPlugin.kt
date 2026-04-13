@@ -2,7 +2,6 @@ package com.mikepenz.gradle
 
 import com.mikepenz.gradle.utils.readLocalProperties
 import com.mikepenz.gradle.utils.readPropertyOrElse
-import nl.littlerobots.vcu.plugin.versionCatalogUpdate
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 
@@ -18,15 +17,7 @@ class RootConventionPlugin : Plugin<Project> {
 
         val versionCatalogUpdateEnabled = project.readPropertyOrElse("com.mikepenz.version-catalog-update.enabled", "false", localProperties).toBoolean()
         if (versionCatalogUpdateEnabled) {
-            pluginManager.apply("nl.littlerobots.version-catalog-update")
-
-            versionCatalogUpdate {
-                sortByKey.set(false)
-
-                keep {
-                    it.keepUnusedVersions.set(true)
-                }
-            }
+            applyVersionCatalogUpdate()
         }
 
         val javaResolverResolver = project.readPropertyOrElse("com.mikepenz.ktlint.enabled", "false", localProperties).toBoolean()
