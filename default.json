@@ -1,10 +1,11 @@
 {
-  "$schema": "https://docs.renovateapp.com/renovate-schema.json",
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:recommended",
+    "config:best-practices",
     ":semanticCommits",
-    "helpers:pinGitHubActionDigests",
-    "group:recommended"
+    "group:recommended",
+    "helpers:disableTypesNodeMajor",
+    "security:openssf-scorecard"
   ],
   "pinDigests": true,
   "lockFileMaintenance": {
@@ -15,6 +16,7 @@
     ]
   },
   "osvVulnerabilityAlerts": true,
+  "dependencyDashboardOSVVulnerabilitySummary": "all",
   "vulnerabilityAlerts": {
     "labels": [
       "dependencies",
@@ -32,17 +34,6 @@
   ],
   "timezone": "Europe/Berlin",
   "packageRules": [
-    {
-      "matchManagers": [
-        "maven",
-        "gradle"
-      ],
-      "registryUrls": [
-        "https://repo.maven.apache.org/maven2",
-        "https://maven.google.com/",
-        "https://plugins.gradle.org/m2/"
-      ]
-    },
     {
       "matchManagers": [
         "gradle-wrapper"
@@ -63,29 +54,117 @@
       "labels": [
         "dependencies",
         "javascript"
+      ],
+      "matchManagers": [
+        "npm"
       ]
     },
     {
-      "matchPackagePatterns": [
-        "^mikepenz/"
+      "matchManagers": [
+        "npm"
       ],
-      "groupName": "Mike Penz Internal Projects",
-      "automerge": true,
-      "platformAutomerge": true,
-      "schedule": [
-        "at any time"
-      ]
-    },
-    {
-      "matchPackagePatterns": [
-        "^org.jetbrains.kotlin",
-        "^com.android.tools.build",
-        "^androidx.compose"
+      "matchDepTypes": [
+        "devDependencies"
       ],
-      "groupName": "Kotlin & Android Core",
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "groupName": "Node devDependency major updates",
       "labels": [
-        "kotlin",
+        "dependencies",
+        "javascript"
+      ]
+    },
+    {
+      "matchManagers": [
+        "cargo"
+      ],
+      "matchDepTypes": [
+        "dev-dependencies",
+        "build-dependencies"
+      ],
+      "matchUpdateTypes": [
+        "patch",
+        "minor"
+      ],
+      "automerge": true,
+      "platformAutomerge": false,
+      "groupName": "Cargo dev/build dependency non-major updates",
+      "labels": [
+        "dependencies",
+        "rust"
+      ]
+    },
+    {
+      "matchManagers": [
+        "cargo"
+      ],
+      "matchDepTypes": [
+        "dev-dependencies",
+        "build-dependencies"
+      ],
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "groupName": "Cargo dev/build dependency major updates",
+      "labels": [
+        "dependencies",
+        "rust"
+      ]
+    },
+    {
+      "matchPackageNames": [
+        "/^org\\.jetbrains\\.kotlin[.:]/"
+      ],
+      "groupName": "Kotlin",
+      "labels": [
+        "dependencies",
+        "kotlin"
+      ]
+    },
+    {
+      "matchPackageNames": [
+        "/^org\\.jetbrains\\.kotlinx[.:]/"
+      ],
+      "groupName": "Kotlinx",
+      "labels": [
+        "dependencies",
+        "kotlin"
+      ]
+    },
+    {
+      "matchPackageNames": [
+        "/^com\\.android[.:]/",
+        "!/^com\\.android\\.compose\\.screenshot/"
+      ],
+      "groupName": "Android Gradle Plugin",
+      "labels": [
+        "dependencies",
         "android"
+      ]
+    },
+    {
+      "matchPackageNames": [
+        "/^androidx\\.compose[.:]/",
+        "/^androidx\\.wear\\.compose[.:]/"
+      ],
+      "groupName": "AndroidX Compose",
+      "labels": [
+        "dependencies",
+        "android",
+        "compose"
+      ]
+    },
+    {
+      "matchPackageNames": [
+        "/^org\\.jetbrains\\.compose$/",
+        "/^org\\.jetbrains\\.compose[.:]/",
+        "!/^org\\.jetbrains\\.compose\\.hot-reload/"
+      ],
+      "groupName": "Compose Multiplatform",
+      "labels": [
+        "dependencies",
+        "compose"
       ]
     },
     {
@@ -103,20 +182,18 @@
         "dependencies",
         "github-actions"
       ]
+    },
+    {
+      "matchPackageNames": [
+        "/^mikepenz\\//",
+        "/^(com|dev)\\.mikepenz[.:]/"
+      ],
+      "groupName": "Mike Penz Internal Projects",
+      "automerge": true,
+      "platformAutomerge": true,
+      "schedule": [
+        "at any time"
+      ]
     }
-  ],
-  "gradle": {
-    "enabled": true,
-    "fileMatch": [
-      "(^|/)gradle/libs\\.versions\\.toml$",
-      "(^|/)build\\.gradle\\.kts$",
-      "(^|/)build\\.gradle$"
-    ]
-  },
-  "gradle-wrapper": {
-    "enabled": true,
-    "fileMatch": [
-      "(^|/)gradle/wrapper/gradle-wrapper\\.properties$"
-    ]
-  }
+  ]
 }
