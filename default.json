@@ -4,6 +4,7 @@
     "config:best-practices",
     ":semanticCommits",
     "group:recommended",
+    "helpers:disableTypesNodeMajor",
     "security:openssf-scorecard"
   ],
   "pinDigests": true,
@@ -53,6 +54,62 @@
       "labels": [
         "dependencies",
         "javascript"
+      ],
+      "matchManagers": [
+        "npm"
+      ]
+    },
+    {
+      "matchManagers": [
+        "npm"
+      ],
+      "matchDepTypes": [
+        "devDependencies"
+      ],
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "groupName": "Node devDependency major updates",
+      "labels": [
+        "dependencies",
+        "javascript"
+      ]
+    },
+    {
+      "matchManagers": [
+        "cargo"
+      ],
+      "matchDepTypes": [
+        "dev-dependencies",
+        "build-dependencies"
+      ],
+      "matchUpdateTypes": [
+        "patch",
+        "minor"
+      ],
+      "automerge": true,
+      "platformAutomerge": false,
+      "groupName": "Cargo dev/build dependency non-major updates",
+      "labels": [
+        "dependencies",
+        "rust"
+      ]
+    },
+    {
+      "matchManagers": [
+        "cargo"
+      ],
+      "matchDepTypes": [
+        "dev-dependencies",
+        "build-dependencies"
+      ],
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "groupName": "Cargo dev/build dependency major updates",
+      "labels": [
+        "dependencies",
+        "rust"
       ]
     },
     {
