@@ -35,6 +35,17 @@
   "timezone": "Europe/Berlin",
   "packageRules": [
     {
+      "description": "Automerge non-major updates once required checks pass",
+      "matchUpdateTypes": [
+        "minor",
+        "patch",
+        "pin",
+        "pinDigest",
+        "digest"
+      ],
+      "automerge": true
+    },
+    {
       "matchManagers": [
         "gradle-wrapper"
       ],
