@@ -75,7 +75,7 @@ fun KotlinMultiplatformExtension.configureMultiplatformTargets(
     if (androidEnabled) {
         if (project.pluginManager.hasPlugin("com.android.kotlin.multiplatform.library")) {
             android {
-                this.compileSdk = project.libs.findVersion("compileSdk").get().requiredVersion.toInt()
+                compileSdk { version = release(project.compileSdkVersion.first, minorApiLevel = project.compileSdkVersion.second) }
                 val minSdk = project.readPropertyOrElse("com.mikepenz.android.minSdk", project.libs.findVersion("minSdk").get().requiredVersion, localProperties)?.toInt()
                 this.minSdk = minSdk
             }

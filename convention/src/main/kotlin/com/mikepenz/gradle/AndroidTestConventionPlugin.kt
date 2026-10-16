@@ -2,6 +2,7 @@ package com.mikepenz.gradle
 
 import com.android.build.api.dsl.TestExtension
 import com.android.build.api.variant.HasUnitTestBuilder
+import com.mikepenz.gradle.utils.compileSdkVersion
 import com.mikepenz.gradle.utils.libs
 import com.mikepenz.gradle.utils.readLocalProperties
 import com.mikepenz.gradle.utils.readPropertyOrElse
@@ -24,7 +25,7 @@ class AndroidTestConventionPlugin : Plugin<Project> {
             extensions.configure(TestExtension::class.java) {
                 it.apply {
                     compileSdk {
-                        version = release(libs.findVersion("compileSdk").get().requiredVersion.toInt())
+                        version = release(compileSdkVersion.first, minorApiLevel = compileSdkVersion.second)
                     }
 
                     defaultConfig {
