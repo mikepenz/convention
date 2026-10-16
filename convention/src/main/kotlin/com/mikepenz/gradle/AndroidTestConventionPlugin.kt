@@ -43,14 +43,15 @@ class AndroidTestConventionPlugin : Plugin<Project> {
                         }
                     }
 
-                    buildTypes({
-                        getByName("release") { buildType ->
+                    // com.android.test only has 'debug' by default, 'release' may be added later by the module
+                    buildTypes {
+                        named { it == "release" }.configureEach { buildType ->
                             buildType.isMinifyEnabled = false
                             buildType.proguardFiles(
                                 getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
                             )
                         }
-                    })
+                    }
                 }
             }
 
