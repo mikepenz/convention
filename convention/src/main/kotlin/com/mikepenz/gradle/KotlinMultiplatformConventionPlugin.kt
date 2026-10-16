@@ -16,6 +16,7 @@ import org.jetbrains.kotlin.gradle.dsl.KotlinJvmCompilerOptions
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask
+import com.gradleup.tapmoc.TapmocExtension
 import java.util.Properties
 
 class KotlinMultiplatformConventionPlugin : Plugin<Project> {
@@ -196,7 +197,7 @@ fun Project.configureJava(localProperties: Properties?) {
 
 private fun Project.java(action: JavaPluginExtension.() -> Unit) = extensions.configure(JavaPluginExtension::class.java, action)
 
-internal fun Project.tapmoc(action: tapmoc.TapmocExtension.() -> Unit) = extensions.configure(tapmoc.TapmocExtension::class.java, action)
+internal fun Project.tapmoc(action: TapmocExtension.() -> Unit) = extensions.configure(TapmocExtension::class.java, action)
 
 internal fun org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension.android(action: com.android.build.api.dsl.KotlinMultiplatformAndroidLibraryTarget.() -> Unit) =
     this.extensions.configure(com.android.build.api.dsl.KotlinMultiplatformAndroidLibraryTarget::class.java, action)
