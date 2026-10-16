@@ -1,5 +1,6 @@
 package com.mikepenz.gradle
 
+import com.mikepenz.gradle.utils.compileSdkVersion
 import com.mikepenz.gradle.utils.libs
 import com.mikepenz.gradle.utils.readLocalProperties
 import com.mikepenz.gradle.utils.readPropertyOrElse
@@ -75,7 +76,11 @@ fun KotlinMultiplatformExtension.configureMultiplatformTargets(
     if (androidEnabled) {
         if (project.pluginManager.hasPlugin("com.android.kotlin.multiplatform.library")) {
             android {
-                compileSdk { version = release(project.compileSdkVersion.first, minorApiLevel = project.compileSdkVersion.second) }
+                compileSdk {
+                    version = release(project.compileSdkVersion.first) {
+                        minorApiLevel = project.compileSdkVersion.second
+                    }
+                }
                 val minSdk = project.readPropertyOrElse("com.mikepenz.android.minSdk", project.libs.findVersion("minSdk").get().requiredVersion, localProperties)?.toInt()
                 this.minSdk = minSdk
             }

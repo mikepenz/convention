@@ -26,7 +26,9 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
             extensions.configure(ApplicationExtension::class.java) {
                 it.apply {
                     compileSdk {
-                        version = release(compileSdkVersion.first, minorApiLevel = compileSdkVersion.second)
+                        version = release(compileSdkVersion.first) {
+                            minorApiLevel = compileSdkVersion.second
+                        }
                     }
 
                     defaultConfig {

@@ -25,7 +25,9 @@ class AndroidTestConventionPlugin : Plugin<Project> {
             extensions.configure(TestExtension::class.java) {
                 it.apply {
                     compileSdk {
-                        version = release(compileSdkVersion.first, minorApiLevel = compileSdkVersion.second)
+                        version = release(compileSdkVersion.first) {
+                            minorApiLevel = compileSdkVersion.second
+                        }
                     }
 
                     defaultConfig {
