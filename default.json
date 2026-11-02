@@ -35,6 +35,16 @@
   "timezone": "Europe/Berlin",
   "packageRules": [
     {
+      "description": "typescript-eslint peers typescript <6.1.0 and fails to lint under TS 7; remove once it supports TS 7",
+      "matchManagers": [
+        "npm"
+      ],
+      "matchPackageNames": [
+        "typescript"
+      ],
+      "allowedVersions": "<7"
+    },
+    {
       "description": "Automerge non-major updates once required checks pass",
       "matchUpdateTypes": [
         "minor",
