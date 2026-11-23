@@ -215,6 +215,14 @@
       "schedule": [
         "at any time"
       ]
+    },
+    {
+      "description": "Enforce the 7-day minimumReleaseAge for every datasource. config:best-practices pulls in security:minimumReleaseAgeNpm, a packageRule that lowers npm to 3 days and overrides the top-level value; this rule must stay last so it wins. Security updates are unaffected (vulnerabilityAlerts.minimumReleaseAge).",
+      "matchPackageNames": [
+        "*"
+      ],
+      "minimumReleaseAge": "7 days",
+      "internalChecksFilter": "strict"
     }
   ]
 }
